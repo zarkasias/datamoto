@@ -22,6 +22,13 @@ export default StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 5
     },
+    smallitempicker: {
+        width: '45%',
+        paddingTop: 5,
+        paddingBottom: 0,
+        alignContent: 'stretch',
+        alignSelf: "flex-end"
+    },
     item: {
         paddingTop: 5,
         paddingBottom: 5

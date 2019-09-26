@@ -14,8 +14,9 @@ import { AlertDeletion, FlatListItemSeparator } from '../components/Helpers'
 export default class Client extends Component {
 
     state = {
-        client: this.props.navigation.getParam('client', null)
+        client: this.props.navigation.getParam('client', {})
     };
+
 
     clientname = (fname, lname) => {
         return fname + " " + lname;
@@ -40,6 +41,8 @@ export default class Client extends Component {
     render() {
 
         const { client } = this.state;
+
+        console.log(client);
 
         let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn"><FontIcon name="desktop" size={22} color={'#f5fcff'} /></TouchableOpacity>;
         let editbtn = <TouchableOpacity style={{ marginRight: 20 }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={22} color={'#f5fcff'} /></TouchableOpacity>;

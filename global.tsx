@@ -10,14 +10,22 @@ module.exports = {
       { label: 'Canada', value: 'canada' },
       { label: 'England', value: 'england' }
     ],
+
+    states: [
+      { label: 'California', value: 'ca' },
+      { label: 'Alabama', value: 'cal' },
+      { label: 'Florida', value: 'fl' }
+    ],
+
+
     currencies: [
       { label: 'United States Dollar', value: 'unitedstatesdollar' },
         { label: 'Canadian Dollar', value: 'canadiandollar' },
         { label: 'Pound', value: 'pound' }
     ],
     languages: [
-      { label: 'English', value: 'english' },
-        { label: 'French', value: 'french' },
-        { label: 'Spanish', value: 'spanish' }
+      { label: 'English', value: 'en' },
+        { label: 'French', value: 'fr' },
+        { label: 'Spanish', value: 'sp' }
     ]
   }
