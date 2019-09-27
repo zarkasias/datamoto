@@ -39,6 +39,16 @@ app.get('/contacts', (req, res) => {
     ])
 })
 
+app.get("/assets", (req, res) => {
+    res.json([
+        {id: 23322,
+        description: 'Anesthesia R101',
+        model: 'M28932393',
+        serialNo: 'S8923932389',
+        manufacturer: 'Boston Medical'}
+    ])
+});
+
 // app.get('/menu', (req, res) => {
 //     res.json([
 //       { key: 1, label: 'Hamburger', value: 'hamburger', icon: 'hamburger'},

@@ -71,12 +71,19 @@ export default StyleSheet.create({
             marginTop: 5,
             marginBottom: 5
         },
+        assetinfo: {
+          marginTop: 3,
+          marginBottom: 3
+        },
         clientname: {
             color: "#000",
             fontSize: 18   
         },
         clientdetail: {
             color: "#999"    
+        },
+        assetdetail: {
+          fontSize: 12
         },
         row: {
          flexDirection: 'row',

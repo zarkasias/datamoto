@@ -30,6 +30,10 @@ export default class Client extends Component {
         AlertDeletion(this.deleteclient);
     }
 
+    toAssetList = () => {
+        this.props.navigation.navigate("AssetList");
+    }
+
     deleteclient = () => {
         console.log('delete client called');
     }
@@ -44,7 +48,7 @@ export default class Client extends Component {
 
         console.log(client);
 
-        let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn"><FontIcon name="desktop" size={22} color={'#f5fcff'} /></TouchableOpacity>;
+        let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn" onPress={this.toAssetList}><FontIcon name="desktop" size={22} color={'#f5fcff'} /></TouchableOpacity>;
         let editbtn = <TouchableOpacity style={{ marginRight: 20 }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={22} color={'#f5fcff'} /></TouchableOpacity>;
         let deletebtn = <TouchableOpacity style={{ marginRight: 20 }} key="deletebtn" onPress={this.confirmDeletion}><FontIcon name="trash-alt" size={22} color={'#f5fcff'} /></TouchableOpacity>;
 
