@@ -78,7 +78,7 @@ export default class AssetList extends Component {
 
 showNavigationButton = () => {
     return (
-            <TouchableOpacity style={styles.icon}>
+            <TouchableOpacity style={MainStyles.addicon}>
             <View>
                 <Icon
                 raised
@@ -155,27 +155,3 @@ showNavigationButton = () => {
     }
 
 }
-
-    const styles = StyleSheet.create({
-        form: {
-            marginLeft: 20,
-            width: '85%'
-        },
-        item: {
-            paddingTop: 5,
-            paddingBottom: 5
-        },
-        button: {
-            marginTop: 50,
-            width: '60%',
-            textAlign: 'center'
-    
-        },
-        icon: {
-            position: "absolute",
-            bottom: 20,
-            width: "100%",
-            left: 320,
-            zIndex: 1
-          }
-      })

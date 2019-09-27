@@ -17,15 +17,21 @@ module.exports = {
       { label: 'Florida', value: 'FL' }
     ],
 
-
     currencies: [
       { label: 'United States Dollar', value: 'unitedstatesdollar' },
         { label: 'Canadian Dollar', value: 'canadiandollar' },
         { label: 'Pound', value: 'pound' }
     ],
+
     languages: [
       { label: 'English', value: 'en' },
         { label: 'French', value: 'fr' },
         { label: 'Spanish', value: 'sp' }
+    ],
+
+    customers: [
+      { label: 'Myn System', value: 'MS' },
+        { label: 'Double O', value: 'DO' },
+        { label: 'Crest Twenty', value: 'CT' }
     ]
   }

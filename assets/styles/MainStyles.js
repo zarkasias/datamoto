@@ -40,6 +40,13 @@ export default StyleSheet.create({
           borderBottomWidth: 1,
           borderStyle: 'solid'
         },
+        addicon: {
+          position: "absolute",
+          bottom: 20,
+          width: "100%",
+          left: 320,
+          zIndex: 1
+        },
         clientcontainer: {
             flex: 1,
             flexDirection: 'row'

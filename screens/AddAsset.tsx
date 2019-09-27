@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Form, Item, Input, Label } from 'native-base';
-
-import PickerSelect from 'react-native-picker-select';
-
-import FontIcon from 'react-native-vector-icons/FontAwesome5';
 
 import { FormHeader } from '../components/FormHeader'
 

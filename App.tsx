@@ -23,6 +23,7 @@ import WorkOrderList from './screens/WorkOrderList';
 
 //reminder stack
 import ReminderList from './screens/ReminderList';
+import AddReminder from './screens/AddReminder';
 
 import GLOBAL from './global'
 
@@ -57,7 +58,8 @@ const WorkOrderStack = createStackNavigator({
 });
 
 const ReminderStack = createStackNavigator({
-  RminderList: { screen: ReminderList }
+  RminderList: { screen: ReminderList },
+  AddReminder: { screen: AddReminder }
 }, {
   headerMode: 'none',
 });
@@ -68,7 +70,7 @@ const TabNavigation = createBottomTabNavigator({
   WorkOrders: { screen: WorkOrderStack },
   Reminders: { screen: ReminderStack }
 }, {
-  initialRouteName: 'WorkOrders',
+  initialRouteName: 'Reminders',
   defaultNavigationOptions: ({ navigation }) => {
     return {
       tabBarIcon: ({ tintColor }) => {

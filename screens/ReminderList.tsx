@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Form, Item, Input, Label, Text, Button } from 'native-base';
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { Icon } from 'react-native-elements'
+
+import MainStyles from '../assets/styles/MainStyles'
+import GLOBAL from '../global'
 
 import { SearchBar } from '../components/SearchBar'
 
@@ -9,6 +12,7 @@ import { AlertSelection } from '../components/Helpers'
 export default class ReminderList extends Component {
 
     state = {
+        loading: false,
         searchvisible: false,
         show: true
       };
@@ -19,6 +23,28 @@ export default class ReminderList extends Component {
             searchvisible: !this.state.searchvisible
          });
     }
+
+    addReminder = () => {
+        this.props.navigation.navigate("AddReminder");
+    }
+
+    showNavigationButton = () => {
+        return (
+                <TouchableOpacity style={MainStyles.addicon}>
+                <View>
+                    <Icon
+                    raised
+                    reverse
+                    name="plus"
+                    type="font-awesome"
+                    color="#67b100"
+                    size={25}
+                    onPress={() => this.addReminder()}
+                    />
+                </View>
+                </TouchableOpacity> 
+            )
+        }
 
     render() {
         const { searchvisible, show } = this.state;
@@ -31,50 +57,25 @@ export default class ReminderList extends Component {
               }
         });
 
+        if (this.state.loading) {
+            return (
+              <View style={MainStyles.loader}>
+                <ActivityIndicator size='large' color={GLOBAL.headerBackground} />
+              </View>
+            )
+          }
+
         return(
-            <View style={styles.container}>
+            <View style={MainStyles.container}>
             <SearchBar title="Reminders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />
             <View style={dynamicstyles.content}>
 
-            {/* <Form style={styles.form}>
-                    <Item floatingLabel style={styles.item}>
-                    <Label>Username</Label>
-                    <Input onChangeText={(e) => this.setState({username: e})}  />
-                    </Item>
-                    <Item floatingLabel last style={styles.item}>
-                    <Label>Password</Label>
-                    <Input secureTextEntry onChangeText={(e) => this.setState({password: e})} />
-                    </Item>
-                    
-                    <Button block style={styles.button} onPress={() => this.loginApplication()}>
-                        <Text>Login</Text>
-                    </Button>
-                </Form> */}
-            
+           
+            {this.showNavigationButton()}
+
              </View>   
             </View>
         )
     }
 
 }
-
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-        },
-        form: {
-            marginTop: 60,
-            marginLeft: 20,
-            width: '85%'
-        },
-        item: {
-            paddingTop: 5,
-            paddingBottom: 5
-        },
-        button: {
-            marginTop: 50,
-            width: '60%',
-            textAlign: 'center'
-    
-        }
-      })
