@@ -29,6 +29,27 @@ export default class AddClientDetails extends Component {
 
     }
 
+    componentDidMount() {
+        const clientinfo = this.props.navigation.getParam('info');
+
+        if (clientinfo.contactinfo) {
+            console.log(clientinfo.contactinfo);
+            this.setState({
+                fname: clientinfo.contactinfo.fname || undefined,
+                lname: clientinfo.contactinfo.lname || undefined,
+                addr1: clientinfo.contactinfo.addr1 || undefined,
+                addr2: clientinfo.contactinfo.addr2 || undefined,
+                city: clientinfo.contactinfo.city || undefined,
+                state: clientinfo.contactinfo.state || undefined,
+                zip: clientinfo.contactinfo.zip || undefined,
+                country: clientinfo.contactinfo.country || undefined,
+                phone: clientinfo.contactinfo.phone || undefined,
+                notes: clientinfo.contactinfo.notes || undefined
+
+            });
+        }
+    };
+
     saveclient = () => {
         console.log(this.state);
     }
@@ -48,25 +69,25 @@ export default class AddClientDetails extends Component {
                 <View style={FormStyles.twoitemcontainer}>  
                     <Item floatingLabel style={FormStyles.smallitem}>
                         <Label style={FormStyles.label}>First Name</Label>
-                        <Input onChangeText={(e) => this.setState({fname: e})}  />
+                        <Input value={this.state.fname} onChangeText={(e) => this.setState({fname: e})}  />
                         </Item>
                         <Item floatingLabel style={FormStyles.smallitem}>
                         <Label style={FormStyles.label}>Last Name</Label>
-                        <Input  onChangeText={(e) => this.setState({lname: e})} />
+                        <Input value={this.state.lname}  onChangeText={(e) => this.setState({lname: e})} />
                         </Item>
                     </View>
                     <Item floatingLabel style={FormStyles.item}>
                         <Label style={FormStyles.label}>Address</Label>
-                        <Input onChangeText={(e) => this.setState({addr1: e})}  />
+                        <Input value={this.state.addr1} onChangeText={(e) => this.setState({addr1: e})}  />
                     </Item> 
                     <Item floatingLabel style={FormStyles.item}>
                         <Label style={FormStyles.label}>Address 2 (optional)</Label>
-                        <Input onChangeText={(e) => this.setState({addr2: e})}  />
+                        <Input value={this.state.addr2} onChangeText={(e) => this.setState({addr2: e})}  />
                     </Item>  
                     <View style={FormStyles.twoitemcontainer}>  
                     <Item floatingLabel style={FormStyles.smallitem}>
                         <Label style={FormStyles.label}>City</Label>
-                        <Input onChangeText={(e) => this.setState({city: e})}  />
+                        <Input value={this.state.city} onChangeText={(e) => this.setState({city: e})}  />
                     </Item>
                     <Item style={[FormStyles.smallitempicker, FormStyles.noborder]}>
                         <PickerSelect value={this.state.state} onValueChange={(e) => this.setState({state: e})}
@@ -85,7 +106,7 @@ export default class AddClientDetails extends Component {
                     <View style={FormStyles.twoitemcontainer}>  
                     <Item floatingLabel style={FormStyles.smallitem}>
                         <Label style={FormStyles.label}>Zip Code</Label>
-                        <Input onChangeText={(e) => this.setState({zip: e})}  />
+                        <Input value={this.state.zip} onChangeText={(e) => this.setState({zip: e})}  />
                     </Item>
                     <Item style={[FormStyles.smallitempicker, FormStyles.noborder]}>
                         <PickerSelect value={this.state.country} onValueChange={(e) => this.setState({country: e})}
@@ -103,11 +124,11 @@ export default class AddClientDetails extends Component {
                     </View>
                     <Item floatingLabel style={FormStyles.item}>
                         <Label style={FormStyles.label}>Phone</Label>
-                        <Input onChangeText={(e) => this.setState({phone: e})}  />
+                        <Input value={this.state.phone} onChangeText={(e) => this.setState({phone: e})}  />
                     </Item> 
                     <Item floatingLabel last style={FormStyles.item}>
                         <Label style={FormStyles.label}>Internal Notes</Label>
-                        <Input onChangeText={(e) => this.setState({notes: e})}  />
+                        <Input value={this.state.notes} onChangeText={(e) => this.setState({notes: e})}  />
                     </Item>        
                 </Form>    
             </View>

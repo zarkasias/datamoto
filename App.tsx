@@ -11,6 +11,10 @@ import Login from './screens/Login';
 //client stack
 import ClientList from './screens/ClientList';
 import ClientSheet from './screens/Client';
+
+import AssetList from './screens/AssetList';
+import AddAsset from './screens/AddAsset';
+
 import AddClient from './screens/AddClient';
 import AddClientDetails from './screens/AddClientDetails';
 
@@ -27,12 +31,14 @@ const ClientStack = createStackNavigator({
   Login:   { screen: Login },
   ClientList: { screen: ClientList },
   ClientSheet: { screen: ClientSheet },
+  AddAsset: { screen: AddAsset },
+  AssetList: { screen: AssetList },
   AddClient: { screen: AddClient },
   AddClientDetails: { screen: AddClientDetails }
 
 },{
 headerMode: 'none',
-initialRouteName: 'AddClientDetails',
+initialRouteName: 'ClientList',
 navigationOptions:  ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.index === 0) {
@@ -62,6 +68,7 @@ const TabNavigation = createBottomTabNavigator({
   WorkOrders: { screen: WorkOrderStack },
   Reminders: { screen: ReminderStack }
 }, {
+  initialRouteName: 'WorkOrders',
   defaultNavigationOptions: ({ navigation }) => {
     return {
       tabBarIcon: ({ tintColor }) => {

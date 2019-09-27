@@ -135,7 +135,7 @@ showNavigationButton = () => {
 
         return(
             <View style={MainStyles.container}>
-            <SearchBar title="Assets" visible={searchvisible} changevisibility={this.changeVisibility}  />
+            <SearchBar title="Assets" visible={searchvisible} navigation={this.props.navigation} changevisibility={this.changeVisibility}  />
             <View style={dynamicstyles.content}>
 
             <FlatList

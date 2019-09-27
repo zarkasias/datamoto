@@ -60,8 +60,15 @@ const showSearchBar = (searchRef, changevisibility) => {
     changevisibility();
     searchRef.current.show();
 }
+
+
  
-export const SearchBar = ({title, visible, changevisibility}) => {
+export const SearchBar = ({title, visible, changevisibility, navigation}) => {
+
+    const goBack = () => {
+        navigation.goBack();
+      }
+
     const searchHeaderRef = React.useRef(null);
 
     const dynamicstyles = StyleSheet.create({
@@ -78,6 +85,11 @@ export const SearchBar = ({title, visible, changevisibility}) => {
             <StatusBar barStyle = 'light-content' />
             <View style = { styles.status }/>
             <View style = { styles.header }>
+            {navigation 
+            ? <TouchableOpacity style= {{ marginLeft: 10 }}  onPress={goBack}>
+                <FontIcon name={"arrow-left"} size={20} color={'#f5fcff'} />
+                </TouchableOpacity>
+            : null}
                 <Text style = { styles.label }> {title} </Text>
                 <TouchableOpacity style= {{ marginRight: 20 }}  onPress={() => showSearchBar(searchHeaderRef, changevisibility) }>
                     <FontIcon name={"search"} size={25} color={'#f5fcff'} />

@@ -39,14 +39,14 @@ export default class Client extends Component {
     }
 
     editclient = () => {
-        console.log('edit client called');
+        this.props.navigation.navigate("AddClient", {
+            client: this.state.client
+        });
     }
 
     render() {
 
         const { client } = this.state;
-
-        console.log(client);
 
         let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn" onPress={this.toAssetList}><FontIcon name="desktop" size={22} color={'#f5fcff'} /></TouchableOpacity>;
         let editbtn = <TouchableOpacity style={{ marginRight: 20 }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={22} color={'#f5fcff'} /></TouchableOpacity>;

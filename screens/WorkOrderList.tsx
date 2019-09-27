@@ -34,7 +34,7 @@ export default class WorkOrderList extends Component {
 
         return(
             <View style={styles.container}>
-            <SearchBar title="WorkOrders" visible={searchvisible} changevisibility={this.changeVisibility} />    
+            <SearchBar title="WorkOrders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />    
             <View style={dynamicstyles.content}>
 
             {/* <Form style={styles.form}>

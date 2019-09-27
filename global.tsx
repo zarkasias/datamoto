@@ -6,15 +6,15 @@ module.exports = {
     headerBackground: '#3278eb',
     apikey: "23452342353",
     countries: [
-      { label: 'United States', value: 'unitedstates' },
-      { label: 'Canada', value: 'canada' },
-      { label: 'England', value: 'england' }
+      { label: 'United States', value: 'US' },
+      { label: 'Canada', value: 'CA' },
+      { label: 'England', value: 'GB' }
     ],
 
     states: [
-      { label: 'California', value: 'ca' },
-      { label: 'Alabama', value: 'cal' },
-      { label: 'Florida', value: 'fl' }
+      { label: 'California', value: 'CA' },
+      { label: 'Alabama', value: 'AL' },
+      { label: 'Florida', value: 'FL' }
     ],
 
 

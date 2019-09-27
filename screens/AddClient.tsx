@@ -22,8 +22,30 @@ export default class AddClient extends Component {
         language: undefined,
         email: undefined,
         addcontact: true,
-        contactcolor: '#ccc'
+        buttonlabel: "ADD CONTACT ADDRESS",
+        contactcolor: '#ccc',
+        contactinfo: undefined
     };  
+
+    componentDidMount() {
+        const client = this.props.navigation.getParam('client');
+
+        if (client) {
+            this.setState({
+                companyname: client.companyname || undefined,
+                taxid: client.taxid || undefined,
+                country: client.country || undefined,
+                currency: client.currency || undefined,
+                language: client.language || undefined,
+                email: client.email || undefined,
+                buttonlabel: "EDIT CONTACT ADDRESS",
+                addcontact: false,
+                contactcolor: GLOBAL.headerBackground,
+                contactinfo: client || undefined
+
+            });
+        }
+    };
 
     componentDidUpdate() {
         this._handleStateChange();
@@ -73,11 +95,11 @@ export default class AddClient extends Component {
                 <Form style={FormStyles.clientform}>
                     <Item floatingLabel style={FormStyles.item}>
                     <Label style={FormStyles.label}>Company Name</Label>
-                    <Input onChangeText={(e) => this.setState({companyname: e})}  />
+                    <Input value={this.state.companyname} onChangeText={(e) => this.setState({companyname: e})}  />
                     </Item>
                     <Item floatingLabel style={FormStyles.item}>
                     <Label style={FormStyles.label}>VAT/TAX ID (optional)</Label>
-                    <Input  onChangeText={(e) => this.setState({taxid: e})} />
+                    <Input value={this.state.taxid} onChangeText={(e) => this.setState({taxid: e})} />
                     </Item>
                     <View style={{ marginTop: 25}} />   
                     <PickerSelect value={this.state.country} onValueChange={(e) => this.setState({country: e})}
@@ -117,10 +139,10 @@ export default class AddClient extends Component {
                     }} />
                     <Item floatingLabel last style={FormStyles.lastitem}>
                     <Label style={FormStyles.label}>Email</Label>
-                    <Input textContentType="emailAddress"  onChangeText={(e) => this.setState({email: e})} />
+                    <Input value={this.state.email} textContentType="emailAddress"  onChangeText={(e) => this.setState({email: e})} />
                     </Item>
                     <View style={{ marginTop: 35}} /> 
-                    <TouchableOpacity style={{ marginLeft: 10 }} disabled={this.state.addcontact} onPress={this.addclientdetails} key="savebtn"><Text style={{ color: this.state.contactcolor, fontSize: 21, fontWeight: '600' }}>ADD CONTACT ADDRESS</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ marginLeft: 10 }} disabled={this.state.addcontact} onPress={this.addclientdetails} key="savebtn"><Text style={{ color: this.state.contactcolor, fontSize: 21, fontWeight: '600' }}>{this.state.buttonlabel}</Text></TouchableOpacity>
                 </Form>
 
             </View>

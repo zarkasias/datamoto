@@ -33,7 +33,7 @@ export default class ReminderList extends Component {
 
         return(
             <View style={styles.container}>
-            <SearchBar title="Reminders" visible={searchvisible} changevisibility={this.changeVisibility} />
+            <SearchBar title="Reminders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />
             <View style={dynamicstyles.content}>
 
             {/* <Form style={styles.form}>
