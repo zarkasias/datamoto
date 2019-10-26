@@ -27,7 +27,6 @@ export default StyleSheet.create({
           marginBottom: 20
         },
         list: {
-          paddingVertical: 5,
           margin: 0,
           flexDirection: "row",
           backgroundColor: "#fff",
@@ -50,6 +49,11 @@ export default StyleSheet.create({
         clientcontainer: {
             flex: 1,
             flexDirection: 'row'
+        },
+        workordercontainer: {
+          flex: 1,
+          flexDirection: 'row',
+          position: "relative"
         },
         clientbadgecontainer: {
             marginTop: 10,
@@ -74,9 +78,35 @@ export default StyleSheet.create({
         clientcontentcontainer : {
             marginLeft: 30
         },
+        workordercontentcontainer : {
+          marginLeft: 20,
+          paddingVertical: 5,
+          width: '90%'
+      },
+        workorderdraft : {
+          position: "absolute",
+          top: 0,
+          padding: 0,
+          width: 10,
+          height: "100%",
+          backgroundColor: '#ccc'
+        },
+        workorderactive : {
+          position: "absolute",
+          top: 0,
+          padding: 0,
+          width: 10,
+          height: "100%",
+          backgroundColor: '#67b100'
+        },
         clientinfo : {
             marginTop: 5,
             marginBottom: 5
+        },
+        workrow : {
+           flexDirection: 'row',
+           alignItems: 'stretch',
+           justifyContent: 'space-between' 
         },
         assetinfo: {
           marginTop: 3,
@@ -88,6 +118,14 @@ export default StyleSheet.create({
         },
         clientdetail: {
             color: "#999"    
+        },
+        orderdraft: {
+          fontWeight: 'bold',
+          color: "#999"    
+        },
+        orderactive: {
+          fontWeight: 'bold',
+          color: "#67b100"    
         },
         assetdetail: {
           fontSize: 12

@@ -28,15 +28,31 @@ export default class ClientList extends Component {
 
 
       fetchData = () => {
+
         this.setState({ 
-          loading: true,
-          selection: []
-         })
-    
-        fetch('http://' + GLOBAL.host + ':3000/contacts')
-          .then(response => response.json())
-          .then(result => {
-            result = result.map(item => {
+            loading: true,
+            selection: []
+        });
+
+         (async () => {
+          const rawResponse = await fetch(GLOBAL.apiURL + '/json/listclient/', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              "apiKey": GLOBAL.apikey,
+              "authToken": GLOBAL.authToken,
+              "method": 'getCustomerList',
+              "batchStart": '0',
+              "batchCount": '10'
+          })
+          });
+          const content = await rawResponse.json();
+          console.log(content);
+          let result = content.client;
+          result = result.map(item => {
               item.key = item.id.toString()
               item.isSelect = false
               item.selectedClass = MainStyles.list
@@ -44,18 +60,55 @@ export default class ClientList extends Component {
     
               return item
             })
-    
+        
             this.setState({
               loading: false,
               data: result,
               selection: []
-            })
-          })
-          .catch(error => {
-            this.setState({ loading: false })
-            AlertSelection(error.message)
-          })
-      } 
+            });
+        })();
+      }
+
+        //  var opt1 = {
+        //   uri: URL + '/json/listclient/',
+        //   method: 'POST',
+        //   json: {
+        //     "apiKey": body.apiKey,
+        //     "authToken":body.authToken,
+        //     "method": 'getCustomerList',
+        //     "batchStart": '0',
+        //     "batchCount": '10'
+        //   }
+        // };
+        // console.log(opt1);
+        // request(opt1, function (err, res, bd) {
+        //   if (!err && res.statusCode == 200) {
+        //     console.log('Receive getCustomerList:');
+        //     console.log(bd);
+    
+        // fetch('http://' + GLOBAL.host + ':3000/contacts')
+        //   .then(response => response.json())
+        //   .then(result => {
+        //     result = result.map(item => {
+        //       item.key = item.id.toString()
+        //       item.isSelect = false
+        //       item.selectedClass = MainStyles.list
+        //       item.color = '#ff6600'
+    
+        //       return item
+        //     })
+    
+        //     this.setState({
+        //       loading: false,
+        //       data: result,
+        //       selection: []
+        //     })
+        //   })
+        //   .catch(error => {
+        //     this.setState({ loading: false })
+        //     AlertSelection(error.message)
+        //   })
+      //} 
 
       selectItem = data => {
         const index = this.state.data.findIndex(
@@ -64,9 +117,6 @@ export default class ClientList extends Component {
            this.props.navigation.navigate("ClientSheet", {
             client: this.state.data[index]
           })
-
-
-
       }  
 
     addClient = () => {

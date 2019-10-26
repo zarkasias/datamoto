@@ -37,7 +37,7 @@ app.get('/contacts', (req, res) => {
     country: 'US',
     isAContact: false}     
     ])
-})
+});
 
 app.get("/assets", (req, res) => {
     res.json([
@@ -49,28 +49,42 @@ app.get("/assets", (req, res) => {
     ])
 });
 
-// app.get('/menu', (req, res) => {
-//     res.json([
-//       { key: 1, label: 'Hamburger', value: 'hamburger', icon: 'hamburger'},
-//       { key: 2, label: 'Cheeseburger', value: 'cheeseburger', icon: 'hamburger'},
-//       { key: 3, label: 'Steak Sandwich', value: 'steaksandwich' , icon: 'bread-slice'},
-//       { key: 4, label: 'Chicken Breast', value: 'chickenbreast', icon: 'drumstick-bite'},
-//       { key: 5, label: 'Tilapia', value: 'tilapia', icon: 'fish'},
-//       { key: 6, label: 'Hotdog', value: 'hotdog', icon: 'hotdog' }
-//     ])
-// })
-
-// app.get('/sides', (req, res) => {
-//     res.json([
-//       { key: 1, label: 'French Fries', value: 'french_fries'},
-//       { key: 2, label: 'Sweet Potato Fries', value: 'sweet_potato_fries'},
-//       { key: 3, label: 'Onion Rings', value: 'onion_rings'},
-//       { key: 4, label: 'White Rice', value: 'white_rice'},
-//       { key: 5, label: 'Brown Rice', value: 'brown_rice'},
-//       { key: 6, label: 'Steamed Vegetables', value: 'steamed_veggies'},
-//       { key: 7, label: 'Asparagus', value: 'asparagus'}
-//     ])
-// })
+app.get("/workorders", (req, res) => {
+    res.json([
+        {
+            id: 4546,
+            clientid: 443,
+            clientContactId: 437,
+            orderDate: 'Aug 20, 2019',
+            status: 1,
+            notesForClient: 'notesForClient',
+            currency: 'USD',
+            companyid: 498,
+            ordertotal: 438.9,
+            orderNumber: 'WQT-01149',
+            userWhoCreated: 'dsarmah@hotmail.com',
+            userWhoLastUpdated: 'dsarmah@hotmail.com',
+            lastUpdateDate: 'Aug 20, 2019 4:19:20 PM',
+            clientName: "Amy's Bird Sanctuary",
+            language: 'en',
+            billToId: 437,
+            shippToId: 437,
+            shipmthd: 'FedEx',
+            deleted: false,
+            archieve: false,
+            signature: [Array],
+            printSignName: 'printSignName_1000',
+            signDate: 'Aug 20, 2019 1:02:45 PM',
+            conversionRate: 1,
+            conversionDate: 'Aug 20, 2019 4:19:19 PM',
+            email: 'ddww@wwdd.com',
+            orderEstimatedDeliveryDate: 'Aug 20, 2019 1:02:45 PM',
+            term: 'Cash',
+            discountTotal: 0,
+            taxTotal: 0
+          }  
+    ])
+});
 
 // app.post('/order', (req, res) => {
 //   //setTimeout(() => {

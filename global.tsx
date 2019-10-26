@@ -1,10 +1,13 @@
 module.exports = {
     initialScreen: 'Login',
     currentScreen: null,
-    host: '10.171.12.241',
+    host: 'localhost',
+    apiURL: 'https://app.datamoto.com',
+    apikey: "23452342353",
+    authToken: null,
+    companyId: null,
     statusbarBackground: '#00348a',
     headerBackground: '#3278eb',
-    apikey: "23452342353",
     countries: [
       { label: 'United States', value: 'US' },
       { label: 'Canada', value: 'CA' },
@@ -18,9 +21,9 @@ module.exports = {
     ],
 
     currencies: [
-      { label: 'United States Dollar', value: 'unitedstatesdollar' },
-        { label: 'Canadian Dollar', value: 'canadiandollar' },
-        { label: 'Pound', value: 'pound' }
+      { label: 'United States Dollar', value: 'USD' },
+        { label: 'Canadian Dollar', value: 'CAD' },
+        { label: 'Pound', value: 'GBP' }
     ],
 
     languages: [

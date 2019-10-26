@@ -20,6 +20,7 @@ import AddClientDetails from './screens/AddClientDetails';
 
 //workorder stack
 import WorkOrderList from './screens/WorkOrderList';
+import AddWorkOrder from './screens/AddWorkOrder';
 
 //reminder stack
 import ReminderList from './screens/ReminderList';
@@ -39,7 +40,7 @@ const ClientStack = createStackNavigator({
 
 },{
 headerMode: 'none',
-initialRouteName: 'ClientList',
+initialRouteName: 'Login',
 navigationOptions:  ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.index === 0) {
@@ -52,9 +53,11 @@ navigationOptions:  ({ navigation }) => {
 }});
 
 const WorkOrderStack = createStackNavigator({
-  WorkOrderList: { screen: WorkOrderList }
+  WorkOrderList: { screen: WorkOrderList },
+  AddWorkOrder: { screen: AddWorkOrder }
 }, {
   headerMode: 'none',
+  initialRouteName: 'AddWorkOrder'
 });
 
 const ReminderStack = createStackNavigator({
@@ -70,7 +73,7 @@ const TabNavigation = createBottomTabNavigator({
   WorkOrders: { screen: WorkOrderStack },
   Reminders: { screen: ReminderStack }
 }, {
-  initialRouteName: 'Reminders',
+  initialRouteName: 'Clients',
   defaultNavigationOptions: ({ navigation }) => {
     return {
       tabBarIcon: ({ tintColor }) => {

@@ -13,14 +13,29 @@ export default class Login extends Component {
 
    
     state = {
-        username: '',
-        password: ''
+        username: 'p1@p1.com',
+        password: '111111'
     }
 
     loginApplication = () => {
-        
-        GLOBAL.apikey = "23452342353";
-        this.props.navigation.navigate('ClientList');
+        (async () => {
+            const rawResponse = await fetch(GLOBAL.apiURL + '/json/apikeygen/', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                "username": this.state.username,
+                "password": this.state.password,
+            })
+            });
+            const content = await rawResponse.json();
+            GLOBAL.apikey = content.apiKey;
+            GLOBAL.authToken = content.authToken;
+            GLOBAL.companyId = content.companyId;
+            this.props.navigation.navigate("ClientList");
+          })();
     }
   
     render() {
@@ -29,7 +44,7 @@ export default class Login extends Component {
 
         return(
             <View style={MainStyles.container}>
-            <CustomHeader title="Datamoto" navigation={''} props={[logo]} />
+            <CustomHeader title="Datamoto" navigation={''} buttons={[logo]} />
             <View style={FormStyles.content}>
 
                 <Form style={FormStyles.loginform}>
