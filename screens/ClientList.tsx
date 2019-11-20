@@ -8,6 +8,15 @@ import GLOBAL from '../global'
 import { SearchBar } from '../components/SearchBar'
 
 import { AlertSelection } from '../components/Helpers'
+var Promise = require('promise');
+
+/*
+const getContact =  => {
+  return new Promise((resolve, reject) => {
+    return setTimeout(() => resolve(users.id), 500)
+  })
+}
+*/
 
 export default class ClientList extends Component {
 
@@ -25,11 +34,37 @@ export default class ClientList extends Component {
           this.fetchData()
         );
       }
+      /*
+      fetchData = () => {
 
+        this.setState({
+            loading: true,
+            selection: []
+        });
+
+        util.getClients().then(function (cls) {
+          const result = cls.client;
+          Promise.all(
+            result.map(async item => {
+              util.getContacts(item).then(function (cc) {
+                console.log('*************************************************');
+                this.setState({
+                  loading: false,
+                  data: cc,
+                  selection: []
+                })
+
+              })
+            })
+
+          )
+
+        })
+      }*/
 
       fetchData = () => {
 
-        this.setState({ 
+        this.setState({
             loading: true,
             selection: []
         });
@@ -57,16 +92,40 @@ export default class ClientList extends Component {
               item.isSelect = false
               item.selectedClass = MainStyles.list
               item.color = '#ff6600'
-    
+
+              if (item.contact) {
+                item.fname = '';
+                if (item.contact[0]) {
+                  item.fname = item.contact[0].fname
+                }
+                item.lname = '';
+                if (item.contact[0]) {
+                  item.lname = item.contact[0].lname
+                }
+                item.city = '';
+                if (item.contact[0]) {
+                  item.city = item.contact[0].city
+                }
+                item.email = '';
+                if (item.contact[0]) {
+                  item.email = item.contact[0].email
+                }
+              } else {
+                item.fname = 'ssss';
+                item.lname = 'dddd';
+                item.city = 'frem';
+                item.email = 'g@g.com';
+              }
               return item
             })
-        
+
             this.setState({
               loading: false,
               data: result,
               selection: []
             });
         })();
+        console.log('Hello....................');
       }
 
         //  var opt1 = {
@@ -85,7 +144,7 @@ export default class ClientList extends Component {
         //   if (!err && res.statusCode == 200) {
         //     console.log('Receive getCustomerList:');
         //     console.log(bd);
-    
+
         // fetch('http://' + GLOBAL.host + ':3000/contacts')
         //   .then(response => response.json())
         //   .then(result => {
@@ -94,10 +153,10 @@ export default class ClientList extends Component {
         //       item.isSelect = false
         //       item.selectedClass = MainStyles.list
         //       item.color = '#ff6600'
-    
+
         //       return item
         //     })
-    
+
         //     this.setState({
         //       loading: false,
         //       data: result,
@@ -108,7 +167,7 @@ export default class ClientList extends Component {
         //     this.setState({ loading: false })
         //     AlertSelection(error.message)
         //   })
-      //} 
+      //}
 
       selectItem = data => {
         const index = this.state.data.findIndex(
@@ -117,14 +176,14 @@ export default class ClientList extends Component {
            this.props.navigation.navigate("ClientSheet", {
             client: this.state.data[index]
           })
-      }  
+      }
 
     addClient = () => {
       this.props.navigation.navigate("AddClient");
     }
 
     changeVisibility = () => {
-        this.setState({ 
+        this.setState({
             show: !this.state.show,
             searchvisible: !this.state.searchvisible
          });
@@ -146,12 +205,21 @@ showNavigationButton = () => {
                 onPress={() => this.addClient()}
                 />
             </View>
-            </TouchableOpacity> 
+            </TouchableOpacity>
         )
     }
 
     clientInitials = (fname, lname) => {
-        return fname[0] + lname[0];
+        s = "";
+        if (lname) {
+          s = lname[0];
+        }
+        else if (fname && fname.length > 1) {
+          s = fname[1];
+        } else {
+          s = fname[0];
+        }
+        return fname[0] + s;
     };
 
     renderItem = data =>
@@ -164,15 +232,15 @@ showNavigationButton = () => {
         >
         <View style={MainStyles.clientcontainer}>
             <View style={[MainStyles.clientbadgecontainer, MainStyles.clientinitialscontainer]}>
-                <Text style={MainStyles.clientbadge}>{this.clientInitials(data.item.fname, data.item.lname)}</Text>  
+                <Text style={MainStyles.clientbadge}>{this.clientInitials(data.item.fname, data.item.lname)}</Text>
             </View>
             <View style={MainStyles.clientcontentcontainer}>
                 <Text style={[MainStyles.clientname, MainStyles.clientinfo]}> {data.item.fname} {data.item.lname} </Text>
                 <Text style={[MainStyles.clientdetail, MainStyles.clientinfo]}> {data.item.city} </Text>
                 <Text style={[MainStyles.clientdetail, MainStyles.clientinfo]}> {data.item.email} </Text>
             </View>
-        </View>  
-        
+        </View>
+
         </TouchableOpacity>
 
     render() {
@@ -206,11 +274,11 @@ showNavigationButton = () => {
                 extraData={this.state}
                 style={MainStyles.List}
             />
-                           
+
 
             {this.showNavigationButton()}
-            
-             </View>   
+
+             </View>
             </View>
         )
     }

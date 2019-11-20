@@ -1,0 +1,168 @@
+Request updateCustomer:
+{
+  uri: 'http://localhost:9080/json/client/',
+  method: 'POST',
+  json: {
+    apiKey: 'ZHNhcm1haEBob3RtYWlsLmNvbTQ5OA==',
+    authToken: 'KWoRRVpSTybj5sjYcE7lzz4nrDU=',
+    method: 'updateCustomer',
+    name: 'Changed',
+    id: 444
+  }
+}
+
+Request deleteCustomer...
+{
+  uri: 'http://localhost:9080/json/client/',
+  method: 'POST',
+  json: {
+    apiKey: 'ZHNhcm1haEBob3RtYWlsLmNvbTQ5OA==',
+    authToken: 'KWoRRVpSTybj5sjYcE7lzz4nrDU=',
+    method: 'deleteCustomer',
+    contact: [ [Object] ],
+    name: 'My Company',
+    currency: 'USD',
+    country: 'US',
+    type: 1,
+    id: 4748
+  }
+}
+
+Request getWorkorderList
+{
+  uri: 'http://localhost:9080/json/workorder/',
+  method: 'POST',
+  json: {
+    apiKey: 'ZHNhcm1haEBob3RtYWlsLmNvbTQ5OA==',
+    authToken: 'KWoRRVpSTybj5sjYcE7lzz4nrDU=',
+    "method": 'getWorkorderList',
+    "batchStart": '0',
+    "batchCount": '10'
+  }
+}
+
+Request updateWorkorder
+{
+  uri: 'http://localhost:9080/json/workorder/',
+  method: 'POST',
+  json: {
+    apiKey: 'ZHNhcm1haEBob3RtYWlsLmNvbTQ5OA==',
+    authToken: 'KWoRRVpSTybj5sjYcE7lzz4nrDU=',
+    method: 'updateWorkorder',
+    batchStart: '0',
+    batchCount: '3',
+    clientid: 38,
+    clientContactId: 39,
+    notesForClient: 'notesForClient',
+    currency: 'USD',
+    companyid: 498,
+    clientName: "Amy's Bird Sanctuary",
+    billToId: 39,
+    shippToId: 39,
+    shipmthd: 'FedEx',
+    signature: [
+      115, 105,
+      103, 110,
+       97, 116,
+      117, 114,
+      101
+    ],
+    printSignName: 'printSignName_1000',
+    signDate: 'Aug 20, 2019 1:02:45 PM',
+    lineItem: [ [Object], [Object], [Object] ],
+    orderEstimatedDeliveryDate: 'Aug 20, 2019 1:02:45 PM',
+    term: 'Cash',
+    clientId: 38,
+    worder: [ [Object] ],
+    companyName: 'Change Company Name',
+    description: 'desc',
+    model: 'model...',
+    serialNo: 'serialNo',
+    manufacturer: 'manuf...',
+    id: 4744
+  }
+}
+
+Request searchWorkorder
+{
+  uri: 'http://localhost:9080/json/listworkorder/',
+  method: 'POST',
+  json: {
+    apiKey: 'ZHNhcm1haEBob3RtYWlsLmNvbTQ5OA==',
+    authToken: 'KWoRRVpSTybj5sjYcE7lzz4nrDU=',
+    method: 'searchWorkorder',
+    clientid: 38,
+    worder: [
+        {
+          'orderNumber':'W',
+        }
+      ];
+  }
+}
+
+Request AddWorkOrder
+{
+  uri: 'http://localhost:9080/json/workorder/',
+  method: 'POST',
+  json: {
+    apiKey: 'ZHNhcm1haEBob3RtYWlsLmNvbTQ5OA==',
+    authToken: 'KWoRRVpSTybj5sjYcE7lzz4nrDU=',
+    method: 'addWorkorder',
+    batchStart: '0',
+    batchCount: '3',
+    clientid: 38,
+    clientContactId: 39,
+    notesForClient: 'notesForClient',
+    currency: 'USD',
+    companyid: 498,
+    clientName: "Amy's Bird Sanctuary",
+    billToId: 39,
+    shippToId: 39,
+    shipmthd: 'FedEx',
+    signature: [
+      115, 105,
+      103, 110,
+       97, 116,
+      117, 114,
+      101
+    ],
+    printSignName: 'printSignName',
+    signDate: 'Aug 20, 2019 1:02:45 PM',
+    orderEstimatedDeliveryDate: 'Aug 20, 2019 1:02:45 PM',
+    term: 'Cash',
+    lineItem: [ {
+          'item':'lot101',
+          'description':'lot test',
+          'qty':2.0,
+          'discount':10.0,
+          'unitPrice':5.0,
+          'tax1':10.0,
+          'tax01':'CA',
+          'companyId':companyId,
+          'itemId':1202,
+          'isService':false
+        },
+        {
+          'item':'Testing',
+          'description':'Testing inventory',
+          'qty':2.0,
+          'discount':5.0,
+          'unitPrice':100.0,
+          'tax1':10.0,
+          'tax01':'CA',
+          'companyId':companyId,
+          'itemId':1477,
+          'isService':false
+        },
+        {
+          'item':'Intallation',
+          'description':'Anethesia equippment',
+          'qty':1.0,
+          'unitPrice':200.0,
+          'tax1':10.0,
+          'tax01':'CA',
+          'companyId':companyId,
+          'isService':true
+        } ]
+  }
+}

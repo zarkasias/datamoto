@@ -12,6 +12,7 @@ import { AlertSelection } from '../components/Helpers'
 export default class AssetList extends Component {
 
     state = {
+        client: this.props.navigation.getParam('client', {}),
         searchvisible: false,
         show: true,
         loading: false,
@@ -20,6 +21,7 @@ export default class AssetList extends Component {
       };
 
       componentDidMount() {
+        client: this.props.navigation.getParam('client', {})
         const { navigation } = this.props;
         navigation.addListener ('willFocus', () =>
           this.fetchData()
@@ -28,31 +30,42 @@ export default class AssetList extends Component {
 
 
       fetchData = () => {
-        this.setState({ 
-          loading: true,
-          selection: []
-         })
-    
-        fetch('http://' + GLOBAL.host + ':3000/assets')
-          .then(response => response.json())
-          .then(result => {
-            result = result.map(item => {
-              item.key = item.id.toString()
-    
-              return item
-            })
-    
-            this.setState({
-              loading: false,
-              data: result,
-              selection: []
-            })
-          })
-          .catch(error => {
-            this.setState({ loading: false })
-            AlertSelection(error.message)
-          })
-      } 
+        this.setState({
+            loading: true,
+            selection: []
+        });
+
+          (async () => {
+           const rawResponse = await fetch(GLOBAL.apiURL + '/json/listclientasset/', {
+             method: 'POST',
+             headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({
+               "apiKey": GLOBAL.apikey,
+               "authToken": GLOBAL.authToken,
+               "method": 'getClientAssetList',
+               "clientid": this.state.client.id,
+               "batchStart": '0',
+               "batchCount": '100'
+           })
+           });
+           const assets = await rawResponse.json();
+           console.log(assets);
+           let result = assets.asset;
+           result = result.map(item => {
+               item.key = item.id.toString()
+               return item
+             })
+
+             this.setState({
+               loading: false,
+               data: result,
+               selection: []
+             });
+         })();
+      }
 
       selectItem = data => {
         const index = this.state.data.findIndex(
@@ -61,14 +74,16 @@ export default class AssetList extends Component {
            this.props.navigation.navigate("AddAsset", {
             asset: this.state.data[index]
           })
-      }  
+      }
 
     addAsset = () => {
-      this.props.navigation.navigate("AddAsset");
+      this.props.navigation.navigate("AddAsset", {
+        client: this.state.client
+      });
     }
 
     changeVisibility = () => {
-        this.setState({ 
+        this.setState({
             show: !this.state.show,
             searchvisible: !this.state.searchvisible
          });
@@ -90,7 +105,7 @@ showNavigationButton = () => {
                 onPress={() => this.addAsset()}
                 />
             </View>
-            </TouchableOpacity> 
+            </TouchableOpacity>
         )
     }
 
@@ -110,8 +125,8 @@ showNavigationButton = () => {
                 <Text style={[MainStyles.assetdetail, MainStyles.assetinfo]}> Serial: {data.item.serialNo} </Text>
                 <Text style={[MainStyles.assetdetail, MainStyles.assetinfo]}> Manufacturer: {data.item.manufacturer} </Text>
             </View>
-        </View>  
-        
+        </View>
+
         </TouchableOpacity>
 
     render() {
@@ -145,11 +160,11 @@ showNavigationButton = () => {
                 extraData={this.state}
                 style={MainStyles.List}
             />
-                           
+
 
             {this.showNavigationButton()}
-            
-             </View>   
+
+             </View>
             </View>
         )
     }

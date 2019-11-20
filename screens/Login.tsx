@@ -11,7 +11,7 @@ import GLOBAL from '../global'
 
 export default class Login extends Component {
 
-   
+
     state = {
         username: 'p1@p1.com',
         password: '111111'
@@ -34,10 +34,20 @@ export default class Login extends Component {
             GLOBAL.apikey = content.apiKey;
             GLOBAL.authToken = content.authToken;
             GLOBAL.companyId = content.companyId;
+            GLOBAL.term = content.term;
+            GLOBAL.tax = content.tax;
+            GLOBAL.ship = content.ship;
+            GLOBAL.mou = content.mou;
+            console.log('tax=');
+            console.log(GLOBAL.tax);
+            console.log('term=' + GLOBAL.term);
+            console.log('ship=' + GLOBAL.ship);
+            console.log('mou=' + GLOBAL.mou);
+
             this.props.navigation.navigate("ClientList");
           })();
     }
-  
+
     render() {
 
         let logo = <Image key={0} style={{width: 129, height: 29, marginRight: 20}} source={require('../assets/logo.png')} />;
@@ -56,13 +66,13 @@ export default class Login extends Component {
                     <Label>Password</Label>
                     <Input secureTextEntry onChangeText={(e) => this.setState({password: e})} />
                     </Item>
-                    
+
                     <Button block style={FormStyles.button} onPress={() => this.loginApplication()}>
                         <Text>Login</Text>
                     </Button>
                 </Form>
-            
-             </View>   
+
+             </View>
             </View>
         )
     }

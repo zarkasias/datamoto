@@ -12,6 +12,7 @@ import { AlertSelection } from '../components/Helpers'
 export default class WorkOrderList extends Component {
 
     state = {
+        client: this.props.navigation.getParam('client', {}),
         searchvisible: false,
         show: true,
         loading: false,
@@ -20,6 +21,7 @@ export default class WorkOrderList extends Component {
       };
 
       componentDidMount() {
+        client: this.props.navigation.getParam('client', {});
         const { navigation } = this.props;
         navigation.addListener ('willFocus', () =>
           this.fetchData()
@@ -28,50 +30,60 @@ export default class WorkOrderList extends Component {
 
 
       fetchData = () => {
-        this.setState({ 
-          loading: true,
-          selection: []
-         })
-    
-        fetch('http://' + GLOBAL.host + ':3000/workorders')
-          .then(response => response.json())
-          .then(result => {
-            result = result.map(item => {
+        this.setState({
+            loading: true,
+            selection: []
+        });
+        
+         (async () => {
+          const rawResponse = await fetch(GLOBAL.apiURL + '/json/listworkorder/', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              "apiKey": GLOBAL.apikey,
+              "authToken": GLOBAL.authToken,
+              "method": 'getWorkorderList',
+              "clientid": this.state.client.id,
+              "batchStart": '0',
+              "batchCount": '40'
+          })
+          });
+          const wo = await rawResponse.json();
+          console.log(wo.worder);
+          let result = wo.worder;
+          result = result.map(item => {
               item.key = item.id.toString()
-              item.isSelect = false
-              item.selectedClass = MainStyles.list
-              item.color = '#ff6600'
-    
               return item
             })
-    
+
             this.setState({
               loading: false,
               data: result,
               selection: []
-            })
-          })
-          .catch(error => {
-            this.setState({ loading: false })
-            AlertSelection(error.message)
-          })
-      } 
+            });
+        })();
+      }
 
       selectItem = data => {
         const index = this.state.data.findIndex(
             item => data.item.id === item.id
           )
-        //    this.props.navigation.navigate("WorkOrderSheet", {
-        //     client: this.state.data[index]
-        //   })
+          this.props.navigation.navigate("AddWorkOrder", {
+          workorder: this.state.data[index]
+         })
       }
 
       addWorkOrder = () => {
-        this.props.navigation.navigate("AddWorkOrder");
+        this.props.navigation.navigate("AddWorkOrder", {
+          client: this.state.client
+        });
       }
 
       changeVisibility = () => {
-        this.setState({ 
+        this.setState({
             show: !this.state.show,
             searchvisible: !this.state.searchvisible
          });
@@ -91,7 +103,7 @@ export default class WorkOrderList extends Component {
                     onPress={() => this.addWorkOrder()}
                     />
                 </View>
-                </TouchableOpacity> 
+                </TouchableOpacity>
             )
         }
 
@@ -116,8 +128,8 @@ export default class WorkOrderList extends Component {
                     <Text style={MainStyles.ordercost}>{data.item.currency} {data.item.ordertotal}</Text>
                 </View>
             </View>
-        </View>  
-        
+        </View>
+
         </TouchableOpacity>
 
     render() {
@@ -142,7 +154,7 @@ export default class WorkOrderList extends Component {
 
         return(
             <View style={MainStyles.container}>
-            <SearchBar title="WorkOrders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />    
+            <SearchBar title="WorkOrders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />
             <View style={dynamicstyles.content}>
 
             <FlatList
@@ -154,8 +166,8 @@ export default class WorkOrderList extends Component {
             />
 
             {this.showNavigationButton()}
-            
-             </View>   
+
+             </View>
             </View>
         )
     }

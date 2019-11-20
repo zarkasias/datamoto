@@ -36,7 +36,9 @@ const ClientStack = createStackNavigator({
   AddAsset: { screen: AddAsset },
   AssetList: { screen: AssetList },
   AddClient: { screen: AddClient },
-  AddClientDetails: { screen: AddClientDetails }
+  AddClientDetails: { screen: AddClientDetails },
+  WorkOrderList: { screen: WorkOrderList },
+  AddWorkOrder: { screen: AddWorkOrder }
 
 },{
 headerMode: 'none',
@@ -112,7 +114,7 @@ export default class App extends Component {
     return (
       <SafeAreaView style={styles.safeArea}>
         <Application />
-      </SafeAreaView> 
+      </SafeAreaView>
     )
   }
 }

@@ -10,25 +10,30 @@ import GLOBAL from '../global'
 
 export default class AddAsset extends Component {
 
-    
+
 
     state = {
         description: undefined,
         model: undefined,
         serialNo: undefined,
-        manufacturer: undefined
-    };  
+        manufacturer: undefined,
+        id: undefined,
+        client: this.props.navigation.getParam('client', {})
+    };
 
 
     componentDidMount() {
+        this.state.client= this.props.navigation.getParam('client', {});
         const asset = this.props.navigation.getParam('asset');
-
+        //console.log('Got It');
+        //console.log(this.state.client);
         if (asset) {
             this.setState({
                 description: asset.description || undefined,
                 model: asset.model || undefined,
                 serialNo: asset.serialNo || undefined,
-                manufacturer: asset.manufacturer || undefined
+                manufacturer: asset.manufacturer || undefined,
+                id: asset.id || undefined
             });
         }
     };
@@ -36,6 +41,35 @@ export default class AddAsset extends Component {
 
     saveclient = () => {
         console.log(this.state);
+        console.log(this.state.client.id);
+        let mthd = 'addClientAsset';
+        if (this.state.id) {
+          mthd = 'updateClientAsset';
+        }
+        (async () => {
+         const rawResponse = await fetch(GLOBAL.apiURL + '/json/clientasset/', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({
+             "apiKey": GLOBAL.apikey,
+             "authToken": GLOBAL.authToken,
+             "method": mthd,
+             "clientId": this.state.client.id,
+             "companyName": this.state.client.name,
+             "description": this.state.description,
+             "model": this.state.model,
+             "serialNo": this.state.serialNo,
+             "manufacturer": this.state.manufacturer,
+             "id": this.state.id
+         })
+         });
+         const clnt = await rawResponse.json();
+         console.log(clnt);
+         this.props.navigation.navigate('AssetList');
+         })();
     }
 
 
@@ -47,7 +81,7 @@ export default class AddAsset extends Component {
         return(
             <View style={MainStyles.container}>
                 <FormHeader title="Cancel" navigation={this.props.navigation} props={[savebtn]} />
-                
+
 
                 <Form style={FormStyles.clientform}>
                     <Item floatingLabel style={FormStyles.item}>

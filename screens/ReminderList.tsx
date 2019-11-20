@@ -12,20 +12,94 @@ import { AlertSelection } from '../components/Helpers'
 export default class ReminderList extends Component {
 
     state = {
+        client: this.props.navigation.getParam('client', {}),
         loading: false,
         searchvisible: false,
-        show: true
+        show: true,
+        loading: false,
+        data: [],
+        selection: []
       };
 
+      componentDidMount() {
+        client: this.props.navigation.getParam('client', {})
+        const { navigation } = this.props;
+        navigation.addListener ('willFocus', () =>
+          this.fetchData()
+        );
+      }
+
+      fetchData = () => {
+        this.setState({
+            loading: true,
+            selection: []
+        });
+
+          (async () => {
+            console.log('reminders...');
+            let mthd = 'getCustomerReminderAllList';
+            if (this.state.client.id) {
+              mthd = 'getCustomerReminderList';
+            }
+            console.log('reminders...:' + mthd);
+            let clientid = undefined;
+            if (this.state.client.id) {
+              clientid = this.state.client.id
+            }
+            console.log('reminders...:' + clientid);
+           const rawResponse = await fetch(GLOBAL.apiURL + '/json/listclientreminder/', {
+             method: 'POST',
+             headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({
+               "apiKey": GLOBAL.apikey,
+               "authToken": GLOBAL.authToken,
+               "method": mthd,
+               "clientid": this.state.client.id,
+               "batchStart": '0',
+               "batchCount": '100'
+           })
+           });
+           var reminders = await rawResponse.json();
+           console.log(reminders);
+
+           let result = reminders.cReminder;
+           result = result.map(item => {
+               item.key = item.id.toString()
+               return item
+             })
+
+           this.setState({
+             loading: false,
+             data: result,
+             selection: []
+           });
+         })();
+      }
+
+      selectItem = data => {
+        const index = this.state.data.findIndex(
+            item => data.item.id === item.id
+          )
+           this.props.navigation.navigate("AddReminder", {
+            asset: this.state.data[index]
+          })
+      }
+
+    addReminder = () => {
+      this.props.navigation.navigate("AddReminder", {
+        client: this.state.client
+      });
+    }
+
+
       changeVisibility = () => {
-        this.setState({ 
+        this.setState({
             show: !this.state.show,
             searchvisible: !this.state.searchvisible
          });
-    }
-
-    addReminder = () => {
-        this.props.navigation.navigate("AddReminder");
     }
 
     showNavigationButton = () => {
@@ -42,9 +116,28 @@ export default class ReminderList extends Component {
                     onPress={() => this.addReminder()}
                     />
                 </View>
-                </TouchableOpacity> 
+                </TouchableOpacity>
             )
         }
+
+        renderItem = data =>
+            <TouchableOpacity
+            style={[
+                MainStyles.list,
+                data.item.selectedClass
+            ]}
+            onPress={() => this.selectItem(data)}
+            >
+            <View style={MainStyles.clientcontainer}>
+                <View style={MainStyles.clientcontentcontainer}>
+                    <Text style={[MainStyles.clientname, MainStyles.clientinfo]}> {data.item.companyName} </Text>
+                    <Text style={[MainStyles.assetdetail, MainStyles.assetinfo]}> Note: {data.item.log} </Text>
+                    <Text style={[MainStyles.assetdetail, MainStyles.assetinfo]}> Due: {data.item.pendingActivityDate} </Text>
+                    <Text style={[MainStyles.assetdetail, MainStyles.assetinfo]}> By: {data.item.userWhoCreated} </Text>
+                </View>
+            </View>
+
+            </TouchableOpacity>
 
     render() {
         const { searchvisible, show } = this.state;
@@ -70,10 +163,17 @@ export default class ReminderList extends Component {
             <SearchBar title="Reminders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />
             <View style={dynamicstyles.content}>
 
-           
+            <FlatList
+                data={this.state.data}
+                renderItem={item => this.renderItem(item)}
+                idExtractor={item => item.id.toString()}
+                extraData={this.state}
+                style={MainStyles.List}
+            />
+
             {this.showNavigationButton()}
 
-             </View>   
+             </View>
             </View>
         )
     }

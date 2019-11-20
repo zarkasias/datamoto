@@ -30,8 +30,16 @@ export default class Client extends Component {
         AlertDeletion(this.deleteclient);
     }
 
+    toWorkorderList = () => {
+      this.props.navigation.navigate("WorkOrderList", {
+        client: this.state.client
+      });
+    }
+
     toAssetList = () => {
-        this.props.navigation.navigate("AssetList");
+        this.props.navigation.navigate("AssetList", {
+          client: this.state.client
+        });
     }
 
     deleteclient = () => {
@@ -47,19 +55,19 @@ export default class Client extends Component {
     render() {
 
         const { client } = this.state;
-
+        let wbtn = <TouchableOpacity style={{ marginRight: 20 }} key="wbtn" onPress={this.toWorkorderList}><FontIcon name="tasks" size={22} color={'#f5fcff'} /></TouchableOpacity>;
         let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn" onPress={this.toAssetList}><FontIcon name="desktop" size={22} color={'#f5fcff'} /></TouchableOpacity>;
         let editbtn = <TouchableOpacity style={{ marginRight: 20 }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={22} color={'#f5fcff'} /></TouchableOpacity>;
         let deletebtn = <TouchableOpacity style={{ marginRight: 20 }} key="deletebtn" onPress={this.confirmDeletion}><FontIcon name="trash-alt" size={22} color={'#f5fcff'} /></TouchableOpacity>;
 
         return(
             <View style={MainStyles.container}>
-                <CustomHeader title={this.clientname(client.fname, client.lname)} navigation={this.props.navigation} buttons={[compbtn, editbtn, deletebtn]} />
+                <CustomHeader title={this.clientname(client.fname, client.lname)} navigation={this.props.navigation} buttons={[wbtn, compbtn, editbtn, deletebtn]} />
                 <Card>
-                    <CardItem>   
+                    <CardItem>
                         <View style={MainStyles.clientcontainer}>
                         <View style={[MainStyles.clientbadgecontainer, MainStyles.clientinitialscontainer]}>
-                            <Text style={MainStyles.clientbadge}>{this.clientInitials(client.fname, client.lname)}</Text>  
+                            <Text style={MainStyles.clientbadge}>{this.clientInitials(client.fname, client.lname)}</Text>
                         </View>
                         <View style={MainStyles.clientcontentcontainer}>
                             <Text style={[MainStyles.clientname, MainStyles.clientinfo]}> {client.fname} {client.lname} </Text>
@@ -72,7 +80,7 @@ export default class Client extends Component {
                 <CardItem>
                 <View style={MainStyles.clientcontainer}>
                         <View style={MainStyles.clientbadgecontainer}>
-                            <FontIcon name="phone" style={{transform: [ {rotateY: '180deg'}]}} size={30} color={GLOBAL.headerBackground} /> 
+                            <FontIcon name="phone" style={{transform: [ {rotateY: '180deg'}]}} size={30} color={GLOBAL.headerBackground} />
                         </View>
                         <View style={MainStyles.clientcontentcontainer}>
                             <Text style={[MainStyles.clientname, MainStyles.clientinfo]}> {client.phone} </Text>
@@ -83,19 +91,19 @@ export default class Client extends Component {
                 <CardItem>
                 <View style={MainStyles.clientcontainer}>
                         <View style={MainStyles.clientbadgecontainer}>
-                        <FontIcon name="envelope" solid size={30} color={GLOBAL.headerBackground} /> 
+                        <FontIcon name="envelope" solid size={30} color={GLOBAL.headerBackground} />
                         </View>
                         <View style={MainStyles.clientcontentcontainer}>
                             <Text style={[MainStyles.clientname, MainStyles.clientinfo]}>{client.email}</Text>
                         </View>
                         </View>
-                    
+
                 </CardItem>
                 <FlatListItemSeparator />
                 <CardItem>
                 <View style={MainStyles.clientcontainer}>
                         <View style={MainStyles.clientbadgecontainer}>
-                        <FontIcon name="map-marker-alt" size={30} color={GLOBAL.headerBackground} /> 
+                        <FontIcon name="map-marker-alt" size={30} color={GLOBAL.headerBackground} />
                         </View>
                         <View style={MainStyles.clientcontentcontainer}>
                             <Text style={[MainStyles.clientname, MainStyles.clientinfo]}>{client.addr1} {client.addr2}</Text>
@@ -104,8 +112,8 @@ export default class Client extends Component {
                         </View>
                         </View>
                 </CardItem>
-            </Card> 
-            </View> 
+            </Card>
+            </View>
         )
     }
 

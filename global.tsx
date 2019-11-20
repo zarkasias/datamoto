@@ -3,6 +3,7 @@ module.exports = {
     currentScreen: null,
     host: 'localhost',
     apiURL: 'https://app.datamoto.com',
+    //apiURL: 'http://10.0.2.2:9080',
     apikey: "23452342353",
     authToken: null,
     companyId: null,
@@ -36,5 +37,11 @@ module.exports = {
       { label: 'Myn System', value: 'MS' },
         { label: 'Double O', value: 'DO' },
         { label: 'Crest Twenty', value: 'CT' }
-    ]
+    ],
+
+    mou: {},
+    tax: [{}],
+    term: {},
+    ship: {}
+
   }
