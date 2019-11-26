@@ -92,8 +92,8 @@ export default class WorkOrderList extends Component {
          })
          });
          const wo = await rawResponse.json();
-         //console.log('workorderwithclient...contacts');
-         //console.log(wo.client.contact);
+         //console.log('workorderwithclient...wp');
+         //console.log(wo);
          litm = wo.workorder.lineItem;
 
          workorder.lineItem = litm;

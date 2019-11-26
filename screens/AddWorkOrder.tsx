@@ -19,7 +19,6 @@ export default class AddWorkOrder extends Component {
     state = {
         client: this.props.navigation.getParam('client', {}),
         worder: this.props.navigation.getParam('workorder'),
-        addressList: this.props.navigation.getParam('client', {}).contact,
         id: undefined,
         type: undefined,
         clientid: undefined,
@@ -51,7 +50,7 @@ export default class AddWorkOrder extends Component {
         poNumber: undefined,
         conversionRate: undefined,
         conversionDate: undefined,
-        lineItem: this.props.navigation.getParam('workorder').lineItem,
+        lineItem: undefined,
         shippingAddress: undefined,
         orderEstimatedDeliveryDate: undefined,
         term: undefined,
@@ -62,7 +61,9 @@ export default class AddWorkOrder extends Component {
 
     componentDidMount() {
         this.state.client= this.props.navigation.getParam('client', {});
-        this.state.addressList = this.props.navigation.getParam('client', {}).contact;
+        if (this.state.client && this.state.client.contact) {
+          this.state.addressList = this.props.navigation.getParam('client', {}).contact;
+        }
         const worder = this.props.navigation.getParam('workorder');
         //console.log(this.state.client);
         if (worder) {
@@ -216,7 +217,9 @@ export default class AddWorkOrder extends Component {
 
     render() {
         console.log('addressList............');
-        console.log(this.state.addressList);
+        if (this.state.addressList) {
+          console.log(this.state.addressList);
+        }
         // Just checking....
         if (this.state.addressList && this.state.addressList.length > 0) {
           console.log(this.addressFormat(this.state.addressList[0]));
@@ -227,7 +230,7 @@ export default class AddWorkOrder extends Component {
         let savebtn = <TouchableOpacity style={{ marginRight: 20 }} onPress={this.saveworkorder} key="savebtn"><Text style={{ color: GLOBAL.headerBackground, fontWeight: '600' }}>SAVE</Text></TouchableOpacity>;
 
         var orderItems = [];
-        if (this.state.lineItem) {
+        if (this.state.lineItem && this.state.lineItem.length > 0) {
         	for(let i = 0; i < this.state.lineItem.length; i++){
             let ln = this.state.lineItem[i];
         		orderItems.push(
