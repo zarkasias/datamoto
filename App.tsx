@@ -38,7 +38,9 @@ const ClientStack = createStackNavigator({
   AddClient: { screen: AddClient },
   AddClientDetails: { screen: AddClientDetails },
   WorkOrderList: { screen: WorkOrderList },
-  AddWorkOrder: { screen: AddWorkOrder }
+  AddWorkOrder: { screen: AddWorkOrder },
+  ReminderList: { screen: ReminderList },
+  AddReminder: { screen: AddReminder }
 
 },{
 headerMode: 'none',
@@ -59,7 +61,6 @@ const WorkOrderStack = createStackNavigator({
   AddWorkOrder: { screen: AddWorkOrder }
 }, {
   headerMode: 'none',
-  initialRouteName: 'AddWorkOrder'
 });
 
 const ReminderStack = createStackNavigator({

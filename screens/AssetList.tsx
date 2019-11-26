@@ -52,10 +52,12 @@ export default class AssetList extends Component {
            })
            });
            const assets = await rawResponse.json();
+           console.log("assets");
            console.log(assets);
            let result = assets.asset;
            result = result.map(item => {
-               item.key = item.id.toString()
+               item.key = item.id.toString();
+               console.log(item);
                return item
              })
 

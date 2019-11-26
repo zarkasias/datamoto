@@ -18,7 +18,7 @@ export const CustomHeader = ({title, navigation, buttons}) => {
       <StatusBar barStyle = 'light-content' />
       <View style = { styles.status }/>
       <View style={styles.header}>
-      {navigation 
+      {navigation
       ? <TouchableOpacity style= {{ marginLeft: 10 }}  onPress={goBack}>
           <FontIcon name={"arrow-left"} size={20} color={'#f5fcff'} />
         </TouchableOpacity>
@@ -27,8 +27,8 @@ export const CustomHeader = ({title, navigation, buttons}) => {
         {buttons}
       </View>
     </View>
-  )};    
-  
+  )};
+
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 86 : 106;
 
@@ -63,4 +63,3 @@ const APPBAR_HEIGHT = Platform.OS === 'ios' ? 86 : 106;
       textAlign: 'left'
     }
   });
-  

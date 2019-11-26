@@ -58,9 +58,9 @@ export default StyleSheet.create({
         clientbadgecontainer: {
             marginTop: 10,
             marginLeft: 20,
-            textAlign: 'center', 
+            textAlign: 'center',
             alignItems: 'center',
-            justifyContent: 'center' 
+            justifyContent: 'center'
         },
         clientinitialscontainer: {
             width: 60,
@@ -106,7 +106,7 @@ export default StyleSheet.create({
         workrow : {
            flexDirection: 'row',
            alignItems: 'stretch',
-           justifyContent: 'space-between' 
+           justifyContent: 'space-between'
         },
         assetinfo: {
           marginTop: 3,
@@ -114,18 +114,18 @@ export default StyleSheet.create({
         },
         clientname: {
             color: "#000",
-            fontSize: 18   
+            fontSize: 18
         },
         clientdetail: {
-            color: "#999"    
+            color: "#999"
         },
         orderdraft: {
           fontWeight: 'bold',
-          color: "#999"    
+          color: "#999"
         },
         orderactive: {
           fontWeight: 'bold',
-          color: "#67b100"    
+          color: "#67b100"
         },
         assetdetail: {
           fontSize: 12
@@ -138,7 +138,7 @@ export default StyleSheet.create({
        itemicon: {
          alignItems: 'center',
          flexDirection: 'row',
-         justifyContent: 'flex-start',
+         justifyContent: 'space-between',
          padding: 5
        },
        edges: {

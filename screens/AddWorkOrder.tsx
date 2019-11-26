@@ -18,6 +18,8 @@ export default class AddWorkOrder extends Component {
 
     state = {
         client: this.props.navigation.getParam('client', {}),
+        worder: this.props.navigation.getParam('workorder'),
+        addressList: this.props.navigation.getParam('client', {}).contact,
         id: undefined,
         type: undefined,
         clientid: undefined,
@@ -49,7 +51,7 @@ export default class AddWorkOrder extends Component {
         poNumber: undefined,
         conversionRate: undefined,
         conversionDate: undefined,
-        lineItem: undefined,
+        lineItem: this.props.navigation.getParam('workorder').lineItem,
         shippingAddress: undefined,
         orderEstimatedDeliveryDate: undefined,
         term: undefined,
@@ -60,47 +62,50 @@ export default class AddWorkOrder extends Component {
 
     componentDidMount() {
         this.state.client= this.props.navigation.getParam('client', {});
+        this.state.addressList = this.props.navigation.getParam('client', {}).contact;
         const worder = this.props.navigation.getParam('workorder');
-
+        //console.log(this.state.client);
         if (worder) {
+            console.log('passed workorder:');
+            //console.log(worder);
             this.setState({
-                id: worder.id || undefined,
-                type: worder.type || undefined,
-                clientid: worder.clientid || undefined,
-                clientContactId: worder.clientContactId || undefined,
-                orderDate: worder.orderDate || undefined,
-                status: worder.status || undefined,
-                notesInternal: worder.notesInternal || undefined,
-                notesForClient: worder.notesForClient || undefined,
-                createdForUsername: worder.createdForUsername || undefined,
-                currency: worder.currency || undefined,
-                companyid: worder.companyid || undefined,
-                ordertotal: worder.ordertotal || undefined,
-                orderNumber: worder.orderNumber || undefined,
-                userWhoCreated: worder.userWhoCreated || undefined,
-                createDate: worder.createDate || undefined,
-                lastUpdateDate: worder.lastUpdateDate || undefined,
-                clientName: worder.clientName || undefined,
-                language: worder.language || undefined,
-                billToId: worder.billToId || undefined,
-                shippToId: worder.shippToId || undefined,
-                shipmthd: worder.shipmthd || undefined,
-                expiryDate: worder.expiryDate || undefined,
-                signature: worder.signature || undefined,
-                printSignName: worder.printSignName || undefined,
-                signDate: worder.signDate || undefined,
-                invoiceId: worder.invoiceId || undefined,
-                invoiceNumber: worder.invoiceNumber || undefined,
-                soNumber: worder.soNumber || undefined,
-                poNumber: worder.poNumber || undefined,
-                conversionRate: worder.conversionRate || undefined,
-                conversionDate: worder.conversionDate || undefined,
-                lineItem: worder.lineItem || undefined,
-                shippingAddress: worder.shippingAddress || undefined,
-                orderEstimatedDeliveryDate: worder.orderEstimatedDeliveryDate || undefined,
-                term: worder.term || undefined,
-                discountTotal: worder.discountTotal || undefined,
-                taxTotal: worder.taxTotal || undefined
+                id: worder.id ,
+                type: worder.type,
+                clientid: worder.clientid,
+                clientContactId: worder.clientContactId,
+                orderDate: worder.orderDate,
+                status: worder.status ,
+                notesInternal: worder.notesInternal ,
+                notesForClient: worder.notesForClient,
+                createdForUsername: worder.createdForUsername,
+                currency: worder.currency,
+                companyid: worder.companyid,
+                ordertotal: worder.ordertotal,
+                orderNumber: worder.orderNumber,
+                userWhoCreated: worder.userWhoCreated,
+                createDate: worder.createDate,
+                lastUpdateDate: worder.lastUpdateDate,
+                clientName: worder.clientName,
+                language: worder.language,
+                billToId: worder.billToId,
+                shippToId: worder.shippToId,
+                shipmthd: worder.shipmthd,
+                expiryDate: worder.expiryDate,
+                signature: worder.signature,
+                printSignName: worder.printSignName,
+                signDate: worder.signDate,
+                invoiceId: worder.invoiceId,
+                invoiceNumber: worder.invoiceNumber,
+                soNumber: worder.soNumber,
+                poNumber: worder.poNumber,
+                conversionRate: worder.conversionRate,
+                conversionDate: worder.conversionDate,
+                lineItem: worder.lineItem,
+                shippingAddress: worder.shippingAddress,
+                orderEstimatedDeliveryDate: worder.orderEstimatedDeliveryDate,
+                term: worder.term,
+                discountTotal: worder.discountTotal,
+                taxTotal: worder.taxTotal
             });
         }
     };
@@ -153,49 +158,158 @@ export default class AddWorkOrder extends Component {
              "shippingAddress": this.state.shippingAddress,
              "orderEstimatedDeliveryDate": this.state.orderEstimatedDeliveryDate,
              "term": this.state.term
-
          })
          });
          const wo = await rawResponse.json();
-         console.log(wo);
+         //console.log(wo);
          this.props.navigation.navigate('WorkOrderList');
          })();
     }
 
+    addressFormat(contact) {
+
+      let addr = "";
+      let nl = false;
+      if (contact.fname) {
+        addr = contact.fname + " ";
+        nl = true;
+      }
+      if (contact.lname) {
+        addr = addr + contact.lname + " ";
+        nl = true;
+      }
+      if (nl === true) {
+        addr = addr + "\n";
+      }
+      nl = false;
+      if (contact.addr1) {
+        addr = addr + contact.addr1 + "\n";
+      }
+      if (contact.addr2) {
+        addr = addr + contact.addr2 + "\n";
+      }
+      if (contact.city) {
+        addr = addr + contact.city + ", ";
+        nl = true;
+      }
+      if (contact.state) {
+        addr = addr + contact.state + " ";
+        nl = true;
+      }
+      if (contact.zip) {
+        addr = addr + contact.zip;
+        nl = true;
+      }
+      if (nl === true) {
+        addr = addr + "\n";
+      }
+      if (contact.country) {
+        addr = addr + contact.country;
+      }
+
+      let ret = {};
+      ret.address = addr;
+      ret.id = contact.id;
+
+      return ret;
+    }
 
     render() {
+        console.log('addressList............');
+        console.log(this.state.addressList);
+        // Just checking....
+        if (this.state.addressList && this.state.addressList.length > 0) {
+          console.log(this.addressFormat(this.state.addressList[0]));
+        }
 
         const customerplaceholder = { label: 'Customer', value: null, color: '#a6a6a6'};
 
         let savebtn = <TouchableOpacity style={{ marginRight: 20 }} onPress={this.saveworkorder} key="savebtn"><Text style={{ color: GLOBAL.headerBackground, fontWeight: '600' }}>SAVE</Text></TouchableOpacity>;
+
+        var orderItems = [];
+        if (this.state.lineItem) {
+        	for(let i = 0; i < this.state.lineItem.length; i++){
+            let ln = this.state.lineItem[i];
+        		orderItems.push(
+              <Item key = {i} last style={FormStyles.item}>
+              <Label style={MainStyles.clientname}>{ln.item} | </Label>
+              <Label style={MainStyles.clientname}>{ln.description} | </Label>
+              <Label style={MainStyles.clientname}>{ln.qty} | </Label>
+              <Label style={MainStyles.clientname}>{ln.unitPrice}</Label>
+              </Item>
+        		)
+        	}
+        }
 
         return(
             <View style={MainStyles.container}>
                 <FormHeader title="New WorkOrder" navigation={this.props.navigation} props={[savebtn]} />
 
 
+
                 <Form style={FormStyles.clientform}>
-                <View style={{ marginTop: 25}} />
-                <View style={FormStyles.twoitemcontainer}>
-                <Item style={[FormStyles.smallitempicker, FormStyles.noborder]}>
-                        <PickerSelect value={this.state.billToClient} onValueChange={(e) => this.setState({country: e})}
-                            placeholder={customerplaceholder}
-                            style={{...pickerSelectStyles,
-                                iconContainer: {
-                                    top: 15,
-                                    right: 0,
-                                }}}
-                            items={GLOBAL.countries}
-                            Icon={() => {
-                                return <FontIcon name="caret-down" size={24} color="#000" />;
-                            }} />
-                        </Item>
-                    <Item floatingLabel style={FormStyles.smallitem}>
-                        <Label style={FormStyles.label}>Zip Code</Label>
-                        <Input value={this.state.orderNumber}  />
-                    </Item>
-                    </View>
-                </Form>
+                <View style={{ marginTop: 2}} />
+
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>{this.state.clientName}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Total amount (USD)</Label>
+                <Label style={MainStyles.clientname}>{this.state.ordertotal}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Billed to</Label>
+                <Label style={MainStyles.clientname}>{this.state.billToId}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Shipped to</Label>
+                <Label style={MainStyles.clientname}>{this.state.shippingAddress}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Workorder #</Label>
+                <Label style={MainStyles.clientname}>{this.state.orderNumber}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Date of issue</Label>
+                <Label style={MainStyles.clientname}>{this.state.orderDate}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Estimated due date</Label>
+                <Label style={MainStyles.clientname}>{this.state.orderEstimatedDeliveryDate}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Reference SO#</Label>
+                <Label style={MainStyles.clientname}>{this.state.soNumber}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Terms</Label>
+                <Label style={MainStyles.clientname}>{this.state.term}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Approved by</Label>
+                <Label style={MainStyles.clientname}>{this.state.printSignName}</Label>
+                </Item>
+
+                <Item last style={FormStyles.item}>
+                <Label style={MainStyles.clientname}>Line items of this Workorder...</Label>
+                </Item>
+
+                {orderItems}
+
+
+
+
+              </Form>
 
             </View>
         )

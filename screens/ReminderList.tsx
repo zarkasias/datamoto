@@ -84,7 +84,8 @@ export default class ReminderList extends Component {
             item => data.item.id === item.id
           )
            this.props.navigation.navigate("AddReminder", {
-            asset: this.state.data[index]
+            reminder: this.state.data[index],
+            client: this.state.client
           })
       }
 
@@ -104,18 +105,19 @@ export default class ReminderList extends Component {
 
     showNavigationButton = () => {
         return (
+                this.state.client.id &&
                 <TouchableOpacity style={MainStyles.addicon}>
-                <View>
-                    <Icon
-                    raised
-                    reverse
-                    name="plus"
-                    type="font-awesome"
-                    color="#67b100"
-                    size={25}
-                    onPress={() => this.addReminder()}
-                    />
-                </View>
+                  <View>
+                      <Icon
+                      raised
+                      reverse
+                      name="plus"
+                      type="font-awesome"
+                      color="#67b100"
+                      size={25}
+                      onPress={() => this.addReminder()}
+                      />
+                  </View>
                 </TouchableOpacity>
             )
         }

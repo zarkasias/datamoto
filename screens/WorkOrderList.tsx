@@ -34,7 +34,9 @@ export default class WorkOrderList extends Component {
             loading: true,
             selection: []
         });
-        
+        console.log('this.state.client.id=');
+        console.log(this.state.client.id);
+        let clientid = this.state.client.id;
          (async () => {
           const rawResponse = await fetch(GLOBAL.apiURL + '/json/listworkorder/', {
             method: 'POST',
@@ -47,6 +49,7 @@ export default class WorkOrderList extends Component {
               "authToken": GLOBAL.authToken,
               "method": 'getWorkorderList',
               "clientid": this.state.client.id,
+              "worder": [{"clientid": clientid}],
               "batchStart": '0',
               "batchCount": '40'
           })
@@ -70,10 +73,44 @@ export default class WorkOrderList extends Component {
       selectItem = data => {
         const index = this.state.data.findIndex(
             item => data.item.id === item.id
-          )
-          this.props.navigation.navigate("AddWorkOrder", {
-          workorder: this.state.data[index]
+        )
+        let workorder = this.state.data[index];
+
+        let litm = undefined;
+        (async () => {
+         const rawResponse = await fetch(GLOBAL.apiURL + '/json/workorderwithclient/', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({
+             "apiKey": GLOBAL.apikey,
+             "authToken": GLOBAL.authToken,
+             "method": 'getWorkorderWithClient',
+             "id": workorder.id
          })
+         });
+         const wo = await rawResponse.json();
+         //console.log('workorderwithclient...contacts');
+         //console.log(wo.client.contact);
+         litm = wo.workorder.lineItem;
+
+         workorder.lineItem = litm;
+
+         this.props.navigation.navigate("AddWorkOrder", {
+           workorder,
+           client: wo.client
+         })
+         })();
+        /*
+        const index = this.state.data.findIndex(
+            item => data.item.id === item.id
+        )
+        this.props.navigation.navigate("AddWorkOrder", {
+          workorder: this.state.data[index]
+        }) */
+
       }
 
       addWorkOrder = () => {
@@ -91,6 +128,7 @@ export default class WorkOrderList extends Component {
 
     showNavigationButton = () => {
         return (
+                this.state.client.id &&
                 <TouchableOpacity style={MainStyles.addicon}>
                 <View>
                     <Icon

@@ -11,13 +11,14 @@ import {
 import SearchHeader from 'react-native-search-header';
 import FontIcon from 'react-native-vector-icons/FontAwesome5';
 
+import MainStyles from '../assets/styles/MainStyles'
 import GLOBAL from '../global'
- 
+
 const DEVICE_WIDTH = Dimensions.get(`window`).width;
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 86 : 106;
 let visible = false;
- 
+
 const styles = StyleSheet.create({
     status: {
         zIndex: 10,
@@ -62,8 +63,8 @@ const showSearchBar = (searchRef, changevisibility) => {
 }
 
 
- 
-export const SearchBar = ({title, visible, changevisibility, navigation}) => {
+
+export const SearchBar = ({title, visible, changevisibility, navigation, screen}) => {
 
     const goBack = () => {
         navigation.goBack();
@@ -85,7 +86,7 @@ export const SearchBar = ({title, visible, changevisibility, navigation}) => {
             <StatusBar barStyle = 'light-content' />
             <View style = { styles.status }/>
             <View style = { styles.header }>
-            {navigation 
+            {navigation
             ? <TouchableOpacity style= {{ marginLeft: 10 }}  onPress={goBack}>
                 <FontIcon name={"arrow-left"} size={20} color={'#f5fcff'} />
                 </TouchableOpacity>
@@ -100,7 +101,7 @@ export const SearchBar = ({title, visible, changevisibility, navigation}) => {
                 placeholder = 'Search...'
                 entryAnimation =  'from-right-side'
                 placeholderColor = 'gray'
-                pinnedSuggestions = {[ `react-native-search-header`, `react-native`, `javascript` ]}
+                pinnedSuggestions = {[]}
                 onClear = {() => {
                     console.log(`Clearing input!`);
                 }}
@@ -108,21 +109,87 @@ export const SearchBar = ({title, visible, changevisibility, navigation}) => {
                     changevisibility()
                 }}
                 onGetAutocompletions = {async (text) => {
+                    console.log(screen)
+                    console.log(text)
                     if (text) {
-                        const response = await fetch(`http://suggestqueries.google.com/complete/search?client=firefox&q=${text}`, {
-                            method: `get`
-                        });
-                        const data = await response.json();
-                        return data[1];
+                        return [];
                     } else {
                         return [];
                     }
                 }}
-                onSearch = {(event) => {
-                    console.log(event.nativeEvent.text);
+
+                onSearch = {async (event) => {
+                    console.log(screen)
+                    console.log(event.nativeEvent.text)
+                    if (event.nativeEvent.text) {
+                        if (screen === "client") {
+                          (async () => {
+                           const rawResponse = await fetch(GLOBAL.apiURL + '/json/listclient/', {
+                             method: 'POST',
+                             headers: {
+                               'Accept': 'application/json',
+                               'Content-Type': 'application/json'
+                             },
+                             body: JSON.stringify({
+                               "apiKey": GLOBAL.apikey,
+                               "authToken": GLOBAL.authToken,
+                               "method": 'searchCustomer',
+                               "batchStart": '0',
+                               "batchCount": '40',
+                               "client": [{"name":event.nativeEvent.text,"contact":[]}]
+                           })
+                           });
+                           const content = await rawResponse.json();
+                           console.log(content);
+                           let result = content.client;
+                           result = result.map(item => {
+                               item.key = item.id.toString()
+                               item.isSelect = false
+                               item.selectedClass = MainStyles.list
+                               item.color = '#ff6600'
+
+                               if (item.contact) {
+                                 item.fname = '';
+                                 if (item.contact[0]) {
+                                   item.fname = item.contact[0].fname
+                                 }
+                                 item.lname = '';
+                                 if (item.contact[0]) {
+                                   item.lname = item.contact[0].lname
+                                 }
+                                 item.city = '';
+                                 if (item.contact[0]) {
+                                   item.city = item.contact[0].city
+                                 }
+                                 item.email = '';
+                                 if (item.contact[0]) {
+                                   item.email = item.contact[0].email
+                                 }
+                               } else {
+                                 item.fname = '';
+                                 item.lname = '';
+                                 item.city = '';
+                                 item.email = '';
+                               }
+                               return item
+                             })
+                             return result;
+
+                         })();
+                       } else if (screen === "workorder") {
+
+                       } else if (screen === "reminder") {
+
+                       } else if (screen === "asset") {
+
+                       }
+
+                    } else {
+                        return [];
+                    }
                 }}
+
             />
         </View>
     );
 }
- 

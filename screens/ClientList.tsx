@@ -81,11 +81,11 @@ export default class ClientList extends Component {
               "authToken": GLOBAL.authToken,
               "method": 'getCustomerList',
               "batchStart": '0',
-              "batchCount": '10'
+              "batchCount": '40'
           })
           });
           const content = await rawResponse.json();
-          console.log(content);
+          //console.log(content);
           let result = content.client;
           result = result.map(item => {
               item.key = item.id.toString()
@@ -94,14 +94,15 @@ export default class ClientList extends Component {
               item.color = '#ff6600'
 
               if (item.contact) {
-                item.fname = '';
+                /*item.fname = '';
                 if (item.contact[0]) {
                   item.fname = item.contact[0].fname
                 }
                 item.lname = '';
                 if (item.contact[0]) {
                   item.lname = item.contact[0].lname
-                }
+                }*/
+                item.name = item.name;
                 item.city = '';
                 if (item.contact[0]) {
                   item.city = item.contact[0].city
@@ -111,10 +112,10 @@ export default class ClientList extends Component {
                   item.email = item.contact[0].email
                 }
               } else {
-                item.fname = 'ssss';
-                item.lname = 'dddd';
-                item.city = 'frem';
-                item.email = 'g@g.com';
+                item.name = '';
+                //item.lname = '';
+                item.city = '';
+                item.email = '';
               }
               return item
             })
@@ -209,17 +210,20 @@ showNavigationButton = () => {
         )
     }
 
-    clientInitials = (fname, lname) => {
+    clientInitials = (name) => {
         s = "";
-        if (lname) {
-          s = lname[0];
+        if (name) {
+          let compname = name.split(" ", 2);
+          s = compname[0].charAt(0);
+          if (compname.length > 1) {
+            s = s + compname[1].charAt(0);
+          } else if (compname[0].charAt(1)) {
+            s = s + compname[0].charAt(1);
+          } else {
+            s = s + compname[0].charAt(0);
+          }
         }
-        else if (fname && fname.length > 1) {
-          s = fname[1];
-        } else {
-          s = fname[0];
-        }
-        return fname[0] + s;
+        return s.toUpperCase();
     };
 
     renderItem = data =>
@@ -232,10 +236,10 @@ showNavigationButton = () => {
         >
         <View style={MainStyles.clientcontainer}>
             <View style={[MainStyles.clientbadgecontainer, MainStyles.clientinitialscontainer]}>
-                <Text style={MainStyles.clientbadge}>{this.clientInitials(data.item.fname, data.item.lname)}</Text>
+                <Text style={MainStyles.clientbadge}>{this.clientInitials(data.item.name)}</Text>
             </View>
             <View style={MainStyles.clientcontentcontainer}>
-                <Text style={[MainStyles.clientname, MainStyles.clientinfo]}> {data.item.fname} {data.item.lname} </Text>
+                <Text style={[MainStyles.clientname, MainStyles.clientinfo]}> {data.item.name} </Text>
                 <Text style={[MainStyles.clientdetail, MainStyles.clientinfo]}> {data.item.city} </Text>
                 <Text style={[MainStyles.clientdetail, MainStyles.clientinfo]}> {data.item.email} </Text>
             </View>
@@ -264,7 +268,7 @@ showNavigationButton = () => {
 
         return(
             <View style={MainStyles.container}>
-            <SearchBar title="Clients" visible={searchvisible} navigation="" changevisibility={this.changeVisibility}  />
+            <SearchBar title="Clients" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} screen="client" />
             <View style={dynamicstyles.content}>
 
             <FlatList

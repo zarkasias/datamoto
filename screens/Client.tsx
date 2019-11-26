@@ -22,8 +22,36 @@ export default class Client extends Component {
         return fname + " " + lname;
     }
 
-    clientInitials = (fname, lname) => {
-        return fname[0] + lname[0];
+    fName = (data) => {
+      if (data.contact) {
+        if (data.contact[0]) {
+          return data.contact[0].fname;
+        }
+      }
+    }
+
+    lName = (data) => {
+      if (data.contact) {
+        if (data.contact[0]) {
+          return data.contact[0].lname;
+        }
+      }
+    }
+
+    clientInitials = (name) => {
+      s = "";
+      if (name) {
+        let compname = name.split(" ", 2);
+        s = compname[0].charAt(0);
+        if (compname.length > 1) {
+          s = s + compname[1].charAt(0);
+        } else if (compname[0].charAt(1)) {
+          s = s + compname[0].charAt(1);
+        } else {
+          s = s + compname[0].charAt(0);
+        }
+      }
+      return s.toUpperCase();
     };
 
     confirmDeletion = () => {
@@ -32,6 +60,12 @@ export default class Client extends Component {
 
     toWorkorderList = () => {
       this.props.navigation.navigate("WorkOrderList", {
+        client: this.state.client
+      });
+    }
+
+    toReminderList = () => {
+      this.props.navigation.navigate("ReminderList", {
         client: this.state.client
       });
     }
@@ -55,24 +89,24 @@ export default class Client extends Component {
     render() {
 
         const { client } = this.state;
-        let wbtn = <TouchableOpacity style={{ marginRight: 20 }} key="wbtn" onPress={this.toWorkorderList}><FontIcon name="tasks" size={22} color={'#f5fcff'} /></TouchableOpacity>;
-        let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn" onPress={this.toAssetList}><FontIcon name="desktop" size={22} color={'#f5fcff'} /></TouchableOpacity>;
-        let editbtn = <TouchableOpacity style={{ marginRight: 20 }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={22} color={'#f5fcff'} /></TouchableOpacity>;
-        let deletebtn = <TouchableOpacity style={{ marginRight: 20 }} key="deletebtn" onPress={this.confirmDeletion}><FontIcon name="trash-alt" size={22} color={'#f5fcff'} /></TouchableOpacity>;
+        let wbtn = <TouchableOpacity style={{ marginRight: 20 }} key="wbtn" onPress={this.toWorkorderList}><FontIcon name="tasks" size={16} color={'#f5fcff'} /></TouchableOpacity>;
+        let rbtn = <TouchableOpacity style={{ marginRight: 20 }} key="rbtn" onPress={this.toReminderList}><FontIcon name="bell" size={16} color={'#f5fcff'} /></TouchableOpacity>;
+        let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn" onPress={this.toAssetList}><FontIcon name="desktop" size={16} color={'#f5fcff'} /></TouchableOpacity>;
+        let editbtn = <TouchableOpacity style={{ marginRight: 20 }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={16} color={'#f5fcff'} /></TouchableOpacity>;
+        let deletebtn = <TouchableOpacity style={{ marginRight: 20 }} key="deletebtn" onPress={this.confirmDeletion}><FontIcon name="trash-alt" size={16} color={'#f5fcff'} /></TouchableOpacity>;
 
         return(
             <View style={MainStyles.container}>
-                <CustomHeader title={this.clientname(client.fname, client.lname)} navigation={this.props.navigation} buttons={[wbtn, compbtn, editbtn, deletebtn]} />
+                <CustomHeader title={client.name} navigation={this.props.navigation} buttons={[wbtn, rbtn, compbtn, editbtn, deletebtn]} />
                 <Card>
                     <CardItem>
                         <View style={MainStyles.clientcontainer}>
                         <View style={[MainStyles.clientbadgecontainer, MainStyles.clientinitialscontainer]}>
-                            <Text style={MainStyles.clientbadge}>{this.clientInitials(client.fname, client.lname)}</Text>
+                            <Text style={MainStyles.clientbadge}>{this.clientInitials(client.name)}</Text>
                         </View>
                         <View style={MainStyles.clientcontentcontainer}>
-                            <Text style={[MainStyles.clientname, MainStyles.clientinfo]}> {client.fname} {client.lname} </Text>
-                            <Text style={[MainStyles.clientdetail, MainStyles.clientinfo]}> {client.city} </Text>
-                <Text style={[MainStyles.clientdetail, MainStyles.clientinfo]}> {client.email} </Text>
+                            <Text style={[MainStyles.clientname, MainStyles.clientinfo]}> {client.name} </Text>
+                            <Text style={[MainStyles.clientdetail, MainStyles.clientinfo]}> {this.fName(client)} {this.lName(client)} </Text>
                         </View>
                         </View>
                 </CardItem>
