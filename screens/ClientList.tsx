@@ -34,33 +34,7 @@ export default class ClientList extends Component {
           this.fetchData()
         );
       }
-      /*
-      fetchData = () => {
 
-        this.setState({
-            loading: true,
-            selection: []
-        });
-
-        util.getClients().then(function (cls) {
-          const result = cls.client;
-          Promise.all(
-            result.map(async item => {
-              util.getContacts(item).then(function (cc) {
-                console.log('*************************************************');
-                this.setState({
-                  loading: false,
-                  data: cc,
-                  selection: []
-                })
-
-              })
-            })
-
-          )
-
-        })
-      }*/
 
       fetchData = () => {
 
@@ -94,14 +68,6 @@ export default class ClientList extends Component {
               item.color = '#ff6600'
 
               if (item.contact) {
-                /*item.fname = '';
-                if (item.contact[0]) {
-                  item.fname = item.contact[0].fname
-                }
-                item.lname = '';
-                if (item.contact[0]) {
-                  item.lname = item.contact[0].lname
-                }*/
                 item.name = item.name;
                 item.city = '';
                 if (item.contact[0]) {
@@ -129,46 +95,6 @@ export default class ClientList extends Component {
         console.log('Hello....................');
       }
 
-        //  var opt1 = {
-        //   uri: URL + '/json/listclient/',
-        //   method: 'POST',
-        //   json: {
-        //     "apiKey": body.apiKey,
-        //     "authToken":body.authToken,
-        //     "method": 'getCustomerList',
-        //     "batchStart": '0',
-        //     "batchCount": '10'
-        //   }
-        // };
-        // console.log(opt1);
-        // request(opt1, function (err, res, bd) {
-        //   if (!err && res.statusCode == 200) {
-        //     console.log('Receive getCustomerList:');
-        //     console.log(bd);
-
-        // fetch('http://' + GLOBAL.host + ':3000/contacts')
-        //   .then(response => response.json())
-        //   .then(result => {
-        //     result = result.map(item => {
-        //       item.key = item.id.toString()
-        //       item.isSelect = false
-        //       item.selectedClass = MainStyles.list
-        //       item.color = '#ff6600'
-
-        //       return item
-        //     })
-
-        //     this.setState({
-        //       loading: false,
-        //       data: result,
-        //       selection: []
-        //     })
-        //   })
-        //   .catch(error => {
-        //     this.setState({ loading: false })
-        //     AlertSelection(error.message)
-        //   })
-      //}
 
       selectItem = data => {
         const index = this.state.data.findIndex(

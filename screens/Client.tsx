@@ -66,7 +66,8 @@ export default class Client extends Component {
 
     toReminderList = () => {
       this.props.navigation.navigate("ReminderList", {
-        client: this.state.client
+        client: this.state.client,
+        clientId: this.state.client.id
       });
     }
 

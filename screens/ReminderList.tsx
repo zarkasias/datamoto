@@ -13,6 +13,7 @@ export default class ReminderList extends Component {
 
     state = {
         client: this.props.navigation.getParam('client', {}),
+        clientID: this.props.navigation.getParam('clientId', undefined),
         loading: false,
         searchvisible: false,
         show: true,
@@ -22,7 +23,8 @@ export default class ReminderList extends Component {
       };
 
       componentDidMount() {
-        client: this.props.navigation.getParam('client', {})
+        this.state.clientID = this.props.navigation.getParam('clientId', undefined);
+        this.state.client = this.props.navigation.getParam('client', {});
         const { navigation } = this.props;
         navigation.addListener ('willFocus', () =>
           this.fetchData()
@@ -38,15 +40,18 @@ export default class ReminderList extends Component {
           (async () => {
             console.log('reminders...');
             let mthd = 'getCustomerReminderAllList';
-            if (this.state.client.id) {
+            //if (this.state.client.id) {
+            if (this.state.clientID) {
               mthd = 'getCustomerReminderList';
             }
             console.log('reminders...:' + mthd);
+            /*
             let clientid = undefined;
             if (this.state.client.id) {
               clientid = this.state.client.id
             }
             console.log('reminders...:' + clientid);
+            */
            const rawResponse = await fetch(GLOBAL.apiURL + '/json/listclientreminder/', {
              method: 'POST',
              headers: {
@@ -57,7 +62,7 @@ export default class ReminderList extends Component {
                "apiKey": GLOBAL.apikey,
                "authToken": GLOBAL.authToken,
                "method": mthd,
-               "clientid": this.state.client.id,
+               "clientid": this.state.clientID,
                "batchStart": '0',
                "batchCount": '100'
            })

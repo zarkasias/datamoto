@@ -43,7 +43,7 @@ export default StyleSheet.create({
           position: "absolute",
           bottom: 20,
           width: "100%",
-          left: 320,
+          left: 200,
           zIndex: 1
         },
         clientcontainer: {
