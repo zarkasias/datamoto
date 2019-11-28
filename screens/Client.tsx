@@ -92,7 +92,7 @@ export default class Client extends Component {
         const { client } = this.state;
         let wbtn = <TouchableOpacity style={{ marginRight: 20 }} key="wbtn" onPress={this.toWorkorderList}><FontIcon name="tasks" size={16} color={'#f5fcff'} /></TouchableOpacity>;
         let rbtn = <TouchableOpacity style={{ marginRight: 20 }} key="rbtn" onPress={this.toReminderList}><FontIcon name="bell" size={16} color={'#f5fcff'} /></TouchableOpacity>;
-        let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn" onPress={this.toAssetList}><FontIcon name="desktop" size={16} color={'#f5fcff'} /></TouchableOpacity>;
+        let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn" onPress={this.toAssetList}><FontIcon name="cogs" size={16} color={'#f5fcff'} /></TouchableOpacity>;
         let editbtn = <TouchableOpacity style={{ marginRight: 20 }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={16} color={'#f5fcff'} /></TouchableOpacity>;
         let deletebtn = <TouchableOpacity style={{ marginRight: 20 }} key="deletebtn" onPress={this.confirmDeletion}><FontIcon name="trash-alt" size={16} color={'#f5fcff'} /></TouchableOpacity>;
 

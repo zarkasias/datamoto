@@ -3,6 +3,7 @@ module.exports = {
     currentScreen: null,
     host: 'localhost',
     apiURL: 'https://app.datamoto.com',
+    username: undefined,
     //apiURL: 'http://10.0.2.2:9080',
     apikey: "23452342353",
     authToken: null,

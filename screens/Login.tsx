@@ -17,7 +17,7 @@ export default class Login extends Component {
 
     state = {
         username: '',
-        password: '',
+        password: undefined,
         loading: false
     }
 
@@ -52,7 +52,7 @@ export default class Login extends Component {
               alert ('Please provide correct username and password!');
               return;
             }
-
+            this.state.password = '',
             GLOBAL.apikey = content.apiKey;
             GLOBAL.authToken = content.authToken;
             GLOBAL.companyId = content.companyId;
@@ -60,6 +60,8 @@ export default class Login extends Component {
             GLOBAL.tax = content.tax;
             GLOBAL.ship = content.ship;
             GLOBAL.mou = content.mou;
+            GLOBAL.username = this.state.username.trim();
+
             console.log('tax=');
             console.log(GLOBAL.tax);
             console.log('term=' + GLOBAL.term);

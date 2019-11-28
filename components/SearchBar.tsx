@@ -173,6 +173,7 @@ export const SearchBar = ({title, visible, changevisibility, navigation, screen}
                                }
                                return item
                              })
+                             this.state.data = result;
                              return result;
 
                          })();

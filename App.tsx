@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, YellowBox } from 'react-native';
-import { createAppContainer } from 'react-navigation'
+import { StyleSheet, SafeAreaView, YellowBox, Alert } from 'react-native';
+import { createAppContainer, NavigationActions } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import Login from './screens/Login';
+import Logout from './screens/Logout';
 
 //client stack
 import ClientList from './screens/ClientList';
@@ -70,11 +71,31 @@ const ReminderStack = createStackNavigator({
   headerMode: 'none',
 });
 
+const LogoutStack = createStackNavigator({
+  RminderList: { screen: Logout }
+}, {
+  headerMode: 'none',
+  navigationOptions:  ({ navigation }) => ({
+    tabBarOnPress: (scene, jumpToIndex) => {
+               if (GLOBAL.authToken) {
+               return Alert.alert(   // Shows up the alert without redirecting anywhere
+                   'Datamoto'
+                   ,'Do you really want to logout?'
+                   ,[
+                     {text: 'Yes', onPress: () =>  { GLOBAL.authToken = null; navigation.dispatch(NavigationActions.navigate({ routeName: 'Login' }))}},
+                     {text: 'Cancel'}
+                    ]
+               )}
+           },
+  })
+});
+
 const TabNavigation = createBottomTabNavigator({
 
   Clients: { screen: ClientStack },
   WorkOrders: { screen: WorkOrderStack },
-  Reminders: { screen: ReminderStack }
+  Reminders: { screen: ReminderStack },
+  Logout: { screen: LogoutStack },
 }, {
   initialRouteName: 'Clients',
   defaultNavigationOptions: ({ navigation }) => {
@@ -84,7 +105,9 @@ const TabNavigation = createBottomTabNavigator({
         const name = {
           'Clients' : 'user',
           'WorkOrders' : 'tasks',
-          'Reminders' : 'bell'
+          'Reminders' : 'bell',
+          'Logout' : 'lock'
+
         }[route]
         return <Icon name={name} color={tintColor} solid size={22} />
       },
