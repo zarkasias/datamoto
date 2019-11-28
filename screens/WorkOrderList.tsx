@@ -13,6 +13,7 @@ export default class WorkOrderList extends Component {
 
     state = {
         client: this.props.navigation.getParam('client', {}),
+        clientID: this.props.navigation.getParam('clientId', undefined),
         searchvisible: false,
         show: true,
         loading: false,
@@ -21,7 +22,8 @@ export default class WorkOrderList extends Component {
       };
 
       componentDidMount() {
-        client: this.props.navigation.getParam('client', {});
+        this.state.clientID = this.props.navigation.getParam('clientId', undefined);
+        this.state.client= this.props.navigation.getParam('client', {});
         const { navigation } = this.props;
         navigation.addListener ('willFocus', () =>
           this.fetchData()
@@ -35,8 +37,8 @@ export default class WorkOrderList extends Component {
             selection: []
         });
         console.log('this.state.client.id=');
-        console.log(this.state.client.id);
-        let clientid = this.state.client.id;
+        console.log(this.state.clientID);
+        let clientid = this.state.clientID;
          (async () => {
           const rawResponse = await fetch(GLOBAL.apiURL + '/json/listworkorder/', {
             method: 'POST',
@@ -48,7 +50,7 @@ export default class WorkOrderList extends Component {
               "apiKey": GLOBAL.apikey,
               "authToken": GLOBAL.authToken,
               "method": 'getWorkorderList',
-              "clientid": this.state.client.id,
+              "clientid": this.state.clientID,
               "worder": [{"clientid": clientid}],
               "batchStart": '0',
               "batchCount": '40'
@@ -192,7 +194,10 @@ export default class WorkOrderList extends Component {
 
         return(
             <View style={MainStyles.container}>
-            <SearchBar title="WorkOrders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />
+            {this.state.clientID ?
+            <SearchBar title="WorkOrders" visible={searchvisible} navigation={this.props.navigation} changevisibility={this.changeVisibility} />
+            : <SearchBar title="WorkOrders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />
+            }
             <View style={dynamicstyles.content}>
 
             <FlatList

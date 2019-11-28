@@ -20,7 +20,7 @@ export const CustomHeader = ({title, navigation, buttons}) => {
       <View style={styles.header}>
       {navigation
       ? <TouchableOpacity style= {{ marginLeft: 10 }}  onPress={goBack}>
-          <FontIcon name={"arrow-left"} size={20} color={'#f5fcff'} />
+          <FontIcon name={"arrow-alt-circle-left"} size={30} color={'#f5fcff'} />
         </TouchableOpacity>
       : null}
         <Text style={styles.headertitle}>{title}</Text>

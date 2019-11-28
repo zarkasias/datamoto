@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, FlatList, BackHandler } from 'react-native'
 import { Icon } from 'react-native-elements'
 
 import MainStyles from '../assets/styles/MainStyles'
@@ -25,7 +25,7 @@ export default class ClientList extends Component {
         show: true,
         loading: false,
         data: [],
-        selection: []
+        selection: [],
       };
 
       componentDidMount() {
@@ -33,8 +33,14 @@ export default class ClientList extends Component {
         navigation.addListener ('willFocus', () =>
           this.fetchData()
         );
+        this.backHandler = this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+          return true;
+        });
       }
 
+      componentWillUnmount() {
+          this.backHandler.remove();
+      }
 
       fetchData = () => {
 

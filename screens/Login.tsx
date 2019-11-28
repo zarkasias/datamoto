@@ -92,7 +92,7 @@ export default class Login extends Component {
                     </Item>
                     <Item floatingLabel last style={FormStyles.item}>
                     <Label>Password</Label>
-                    <Input secureTextEntry onChangeText={(e) => this.setState({password: e})}  autoCapitalize= 'none' />
+                    <Input secureTextEntry onChangeText={(e) => this.setState({password: e})}  autoCapitalize='none' clearButtonMode='always' />
                     </Item>
 
                     <Button block style={FormStyles.button} onPress={() => this.loginApplication()}>

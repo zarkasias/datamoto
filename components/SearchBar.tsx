@@ -79,7 +79,7 @@ export const SearchBar = ({title, visible, changevisibility, navigation, screen}
             alignItems: 'center',
             backgroundColor: '#ffffff'
         }
-});
+  });
 
     return (
         <View style = { dynamicstyles.searchcontainer }>
@@ -88,7 +88,7 @@ export const SearchBar = ({title, visible, changevisibility, navigation, screen}
             <View style = { styles.header }>
             {navigation
             ? <TouchableOpacity style= {{ marginLeft: 10 }}  onPress={goBack}>
-                <FontIcon name={"arrow-left"} size={20} color={'#f5fcff'} />
+                <FontIcon name={"arrow-alt-circle-left"} size={30} color={'#f5fcff'} />
                 </TouchableOpacity>
             : null}
                 <Text style = { styles.label }> {title} </Text>

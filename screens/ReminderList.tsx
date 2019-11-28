@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, FlatList, BackHandler } from 'react-native'
 import { Icon } from 'react-native-elements'
 
 import MainStyles from '../assets/styles/MainStyles'
@@ -167,7 +167,10 @@ export default class ReminderList extends Component {
 
         return(
             <View style={MainStyles.container}>
-            <SearchBar title="Reminders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />
+            {this.state.clientID ?
+            <SearchBar title="Reminders" visible={searchvisible} navigation={this.props.navigation} changevisibility={this.changeVisibility} />
+            : <SearchBar title="Reminders" visible={searchvisible} navigation="" changevisibility={this.changeVisibility} />
+            }
             <View style={dynamicstyles.content}>
 
             <FlatList
@@ -184,5 +187,4 @@ export default class ReminderList extends Component {
             </View>
         )
     }
-
 }

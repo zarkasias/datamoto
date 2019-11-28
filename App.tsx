@@ -69,6 +69,7 @@ const ReminderStack = createStackNavigator({
   AddReminder: { screen: AddReminder }
 }, {
   headerMode: 'none',
+  initialRouteName: 'RminderList',
 });
 
 const LogoutStack = createStackNavigator({

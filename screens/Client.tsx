@@ -60,7 +60,8 @@ export default class Client extends Component {
 
     toWorkorderList = () => {
       this.props.navigation.navigate("WorkOrderList", {
-        client: this.state.client
+        client: this.state.client,
+        clientId: this.state.client.id
       });
     }
 
