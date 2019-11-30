@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { 
+import {
   Alert,
   View
 } from 'react-native'
@@ -21,7 +21,7 @@ export function AlertSelection(message: string) {
 
 export function AlertDeletion(fnOkCallBack) {
   Alert.alert(
-    'Delete',
+    'Datamoto',
     'Delete this document?',
     [
       {text: "YES", onPress: fnOkCallBack},

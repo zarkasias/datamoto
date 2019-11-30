@@ -179,7 +179,7 @@ export default class AddReminder extends Component {
 
         return(
             <View style={MainStyles.container}>
-                <FormHeader title="New Reminder" navigation={this.props.navigation} props={[savebtn]} />
+                <FormHeader title="Cancel" navigation={this.props.navigation} props={[savebtn]} />
 
 
                 <Form style={FormStyles.clientform}>
@@ -193,28 +193,30 @@ export default class AddReminder extends Component {
                     <Input value={this.state.message} onChangeText={(e) => this.setState({message: e})} />
                     </Item>
 
-                    <Item last style={FormStyles.item}>
-                    <Label style={FormStyles.label}>Due date</Label>
-                    {
-                     Platform.OS === 'ios' ? (
-                       <DatePickerIOS
-                         date={chosenDate}
-                         onDateChange={this.setDate}
-                       />
-                     ) : (
-                       <View style={MainStyles.AndroidDatePickerWrap}>
-                         <TouchableOpacity onPress={() => this.setDateAndroid()}>
-                           <View style={MainStyles.itemicon}>
-                             <Text style={[MainStyles.HistoryTimeText, { fontSize: 16 }]}>
-                               {this.state.androidDate}
-                             </Text>
-                             <Icon name="ios-calendar" size={25} color="rgb(49, 49, 49)" />
-                           </View>
-                         </TouchableOpacity>
-                       </View>
-                     )
-                   }
-                   </Item>
+                    <View style={{ paddingTop: 30 }}>
+                      <Item last style={FormStyles.item}>
+                      <Label style={FormStyles.clientname}>Due date</Label>
+                      {
+                           Platform.OS === 'ios' ? (
+                             <DatePickerIOS
+                               date={chosenDate}
+                               onDateChange={this.setDate}
+                             />
+                           ) : (
+                             <View style={MainStyles.AndroidDatePickerWrap}>
+                               <TouchableOpacity onPress={() => this.setDateAndroid()}>
+                                 <View style={MainStyles.itemicon}>
+                                   <Text style={[MainStyles.HistoryTimeText, { fontSize: 16 }]}>
+                                     {this.state.androidDate} {'       '}
+                                   </Text>
+                                   <Icon name="ios-calendar" size={25} color="rgb(49, 49, 49)" margin="10" />
+                                 </View>
+                               </TouchableOpacity>
+                             </View>
+                           )
+                     }
+                     </Item>
+                   </View>
                 </Form>
             </View>
         )

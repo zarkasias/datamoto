@@ -15,6 +15,7 @@ import GLOBAL from '../global'
 export default class AddClient extends Component {
 
     state = {
+        client: this.props.navigation.getParam('client'),
         companyname: undefined,
         taxid: undefined,
         country: undefined,
@@ -25,23 +26,23 @@ export default class AddClient extends Component {
         buttonlabel: "ADD CONTACT ADDRESS",
         contactcolor: '#ccc',
         contactinfo: undefined
-    };  
+    };
 
     componentDidMount() {
-        const client = this.props.navigation.getParam('client');
+        this.state.client = this.props.navigation.getParam('client');
 
-        if (client) {
+        if (this.state.client) {
             this.setState({
-                companyname: client.companyname || undefined,
-                taxid: client.taxid || undefined,
-                country: client.country || undefined,
-                currency: client.currency || undefined,
-                language: client.language || undefined,
-                email: client.email || undefined,
+                companyname: this.state.client.companyname || undefined,
+                taxid: this.state.client.taxid || undefined,
+                country: this.state.client.country || undefined,
+                currency: this.state.client.currency || undefined,
+                language: this.state.client.language || undefined,
+                email: this.state.client.email || undefined,
                 buttonlabel: "EDIT CONTACT ADDRESS",
                 addcontact: false,
                 contactcolor: GLOBAL.headerBackground,
-                contactinfo: client || undefined
+                contactinfo: this.state.client || undefined
 
             });
         }
@@ -50,8 +51,8 @@ export default class AddClient extends Component {
     componentDidUpdate() {
         this._handleStateChange();
     }
-    
-  
+
+
       _handleStateChange = () => {
           let isdefined = [];
           const client = this.state;
@@ -59,7 +60,7 @@ export default class AddClient extends Component {
               if ((i !== "taxid" && i !== "addcontact" && i !== "contactcolor")  && client[i] !== undefined) {
                   isdefined.push(i);
               }
-          }    
+          }
           if (isdefined.length === 5 && this.state.addcontact) {
               this.setState({
                 addcontact: false,
@@ -89,8 +90,8 @@ export default class AddClient extends Component {
 
         return(
             <View style={MainStyles.container}>
-                <FormHeader title="New Client" navigation={this.props.navigation} props={[savebtn]} />
-                
+                <FormHeader title="Cancel" navigation={this.props.navigation} props={[savebtn]} />
+
 
                 <Form style={FormStyles.clientform}>
                     <Item floatingLabel style={FormStyles.item}>
@@ -101,38 +102,38 @@ export default class AddClient extends Component {
                     <Label style={FormStyles.label}>VAT/TAX ID (optional)</Label>
                     <Input value={this.state.taxid} onChangeText={(e) => this.setState({taxid: e})} />
                     </Item>
-                    <View style={{ marginTop: 25}} />   
+                    <View style={{ marginTop: 25}} />
                     <PickerSelect value={this.state.country} onValueChange={(e) => this.setState({country: e})}
-                    placeholder={countryplaceholder}    
+                    placeholder={countryplaceholder}
                     style={{...pickerSelectStyles,
                         iconContainer: {
                             top: 18,
                             right: 10,
-                          }}}    
+                          }}}
                     items={GLOBAL.countries}
                     Icon={() => {
                         return <FontIcon name="caret-down" size={24} color="#000" />;
                     }} />
-                    <View style={{ marginTop: 25}} />   
+                    <View style={{ marginTop: 25}} />
                     <PickerSelect value={this.state.currency} onValueChange={(e) => this.setState({currency: e})}
-                    placeholder={currencyplaceholder}    
+                    placeholder={currencyplaceholder}
                     style={{...pickerSelectStyles,
                         iconContainer: {
                             top: 18,
                             right: 10,
-                          }}}    
+                          }}}
                     items={GLOBAL.currencies}
                     Icon={() => {
                         return <FontIcon name="caret-down" size={24} color="#000" />;
                     }} />
-                    <View style={{ marginTop: 25}} />   
+                    <View style={{ marginTop: 25}} />
                     <PickerSelect value={this.state.language} onValueChange={(e) => this.setState({language: e})}
-                    placeholder={languageplaceholder}    
+                    placeholder={languageplaceholder}
                     style={{...pickerSelectStyles,
                         iconContainer: {
                             top: 18,
                             right: 10,
-                          }}}    
+                          }}}
                     items={GLOBAL.languages}
                     Icon={() => {
                         return <FontIcon name="caret-down" size={24} color="#000" />;
@@ -141,7 +142,7 @@ export default class AddClient extends Component {
                     <Label style={FormStyles.label}>Email</Label>
                     <Input value={this.state.email} textContentType="emailAddress"  onChangeText={(e) => this.setState({email: e})} />
                     </Item>
-                    <View style={{ marginTop: 35}} /> 
+                    <View style={{ marginTop: 35}} />
                     <TouchableOpacity style={{ marginLeft: 10 }} disabled={this.state.addcontact} onPress={this.addclientdetails} key="savebtn"><Text style={{ color: this.state.contactcolor, fontSize: 21, fontWeight: '600' }}>{this.state.buttonlabel}</Text></TouchableOpacity>
                 </Form>
 

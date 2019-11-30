@@ -91,15 +91,15 @@ export default class Client extends Component {
     render() {
 
         const { client } = this.state;
-        let wbtn = <TouchableOpacity style={{ marginRight: 20 }} key="wbtn" onPress={this.toWorkorderList}><FontIcon name="tasks" size={16} color={'#f5fcff'} /></TouchableOpacity>;
-        let rbtn = <TouchableOpacity style={{ marginRight: 20 }} key="rbtn" onPress={this.toReminderList}><FontIcon name="bell" size={16} color={'#f5fcff'} /></TouchableOpacity>;
-        let compbtn = <TouchableOpacity style={{ marginRight: 20 }} key="compbtn" onPress={this.toAssetList}><FontIcon name="cogs" size={16} color={'#f5fcff'} /></TouchableOpacity>;
-        let editbtn = <TouchableOpacity style={{ marginRight: 20 }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={16} color={'#f5fcff'} /></TouchableOpacity>;
-        let deletebtn = <TouchableOpacity style={{ marginRight: 20 }} key="deletebtn" onPress={this.confirmDeletion}><FontIcon name="trash-alt" size={16} color={'#f5fcff'} /></TouchableOpacity>;
+        let wbtn = <TouchableOpacity style={{ marginRight: 30, marginTop: 60 }} key="wbtn" onPress={this.toWorkorderList}><FontIcon name="tasks" size={20} color={'#f5fcff'} /></TouchableOpacity>;
+        let compbtn = <TouchableOpacity style={{ marginRight: 30, marginTop: 60  }} key="compbtn" onPress={this.toAssetList}><FontIcon name="cogs" size={20} color={'#f5fcff'} /></TouchableOpacity>;
+        let rbtn = <TouchableOpacity style={{ marginRight: 30, marginTop: 60  }} key="rbtn" onPress={this.toReminderList}><FontIcon name="bell" size={20} color={'#f5fcff'} /></TouchableOpacity>;
+        let editbtn = <TouchableOpacity style={{ marginRight: 30, marginTop: 60  }} key="editbtn" onPress={this.editclient}><FontIcon name="pencil-alt" size={20} color={'#f5fcff'} /></TouchableOpacity>;
+        let deletebtn = <TouchableOpacity style={{ marginRight: 30, marginTop: 60  }} key="deletebtn" onPress={this.confirmDeletion}><FontIcon name="trash-alt" size={20} color={'#f5fcff'} /></TouchableOpacity>;
 
         return(
             <View style={MainStyles.container}>
-                <CustomHeader title={client.name} navigation={this.props.navigation} buttons={[wbtn, rbtn, compbtn, editbtn, deletebtn]} />
+                <CustomHeader title={client.name} navigation={this.props.navigation} buttons={[wbtn, compbtn, rbtn, editbtn, deletebtn]} />
                 <Card>
                     <CardItem>
                         <View style={MainStyles.clientcontainer}>

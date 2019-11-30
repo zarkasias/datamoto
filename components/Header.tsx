@@ -24,7 +24,7 @@ export const CustomHeader = ({title, navigation, buttons}) => {
         </TouchableOpacity>
       : null}
         <Text style={styles.headertitle}>{title}</Text>
-        {buttons}
+          {buttons}
       </View>
     </View>
   )};

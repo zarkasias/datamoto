@@ -246,7 +246,7 @@ export default class AddWorkOrder extends Component {
 
         return(
             <View style={MainStyles.container}>
-                <FormHeader title="New WorkOrder" navigation={this.props.navigation} props={[savebtn]} />
+                <FormHeader title="Cancel" navigation={this.props.navigation} props={[savebtn]} />
 
 
 
